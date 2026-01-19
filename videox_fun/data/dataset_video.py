@@ -4,6 +4,7 @@ import io
 import json
 import math
 import os
+import pickle
 import random
 from contextlib import contextmanager
 from threading import Thread
@@ -12,6 +13,7 @@ import albumentations
 import cv2
 import librosa
 import numpy as np
+import pandas as pd
 import torch
 import torchvision.transforms as transforms
 from decord import VideoReader
@@ -558,13 +560,13 @@ class VideoAnimateDataset(Dataset):
     def __init__(
         self,
         ann_path, data_root=None,
-        video_sample_size=512, 
-        video_sample_stride=4, 
+        video_sample_size=512,
+        video_sample_stride=4,
         video_sample_n_frames=16,
         video_repeat=0,
         text_drop_ratio=0.1,
         enable_bucket=False,
-        video_length_drop_start=0.1, 
+        video_length_drop_start=0.1,
         video_length_drop_end=0.9,
         return_file_name=False,
     ):
@@ -575,7 +577,7 @@ class VideoAnimateDataset(Dataset):
                 dataset = list(csv.DictReader(csvfile))
         elif ann_path.endswith('.json'):
             dataset = json.load(open(ann_path))
-    
+
         self.data_root = data_root
 
         # It's used to balance num of images and videos.
@@ -584,7 +586,7 @@ class VideoAnimateDataset(Dataset):
             for data in dataset:
                 if data.get('type', 'image') != 'video':
                     self.dataset.append(data)
-                    
+
             for _ in range(video_repeat):
                 for data in dataset:
                     if data.get('type', 'image') == 'video':
@@ -615,6 +617,9 @@ class VideoAnimateDataset(Dataset):
         )
 
         self.larger_side_of_image_and_video = min(self.video_sample_size)
+
+        # Cache for loaded FLAME data to avoid repeated pickle file loading
+        self.flame_data_cache = {}
     
     def get_batch(self, idx):
         data_info = self.dataset[idx % len(self.dataset)]
@@ -839,8 +844,75 @@ class VideoAnimateDataset(Dataset):
             raise ValueError("Not enable_bucket is not supported now. ")
         else:
             ref_pixel_values = np.array(ref_pixel_values)
-    
-        return pixel_values, control_pixel_values, face_pixel_values, background_pixel_values, mask, ref_pixel_values, text, "video"
+
+        # Load FLAME data from pickle file
+        flame_file_path = data_info.get('flame_file_path', None)
+        flame_data = None
+
+        # 加上data_root
+
+        if flame_file_path is not None:
+            if self.data_root is not None:
+                flame_file_path = os.path.join(self.data_root, flame_file_path)
+
+            # Load from cache if already loaded
+            if flame_file_path not in self.flame_data_cache:
+                try:
+                    with open(flame_file_path, 'rb') as f:
+                        flame_data = pickle.load(f)
+                        self.flame_data_cache[flame_file_path] = flame_data
+                except Exception as e:
+                    print(f"Warning: Failed to load FLAME data from {flame_file_path}: {e}")
+                    flame_data = None
+            else:
+                flame_data = self.flame_data_cache[flame_file_path]
+
+        # Extract FLAME parameters if data is loaded
+        expression = None
+        global_pose = None
+        jaw_pose = None
+        flame = None
+
+        if flame_data is not None:
+            # Extract the required fields based on the specified format
+            expression = flame_data.get('expression', None)
+            global_pose = flame_data.get('global_pose', None)
+            jaw_pose = flame_data.get('jaw_pose', None)
+
+            # Ensure we have the correct dimensions
+            if expression is not None and len(expression.shape) == 2:
+                # expression should be (248, 50), take the first n_frames
+                n_frames = min(len(batch_index), expression.shape[0])
+                expression = expression[:n_frames]
+            if global_pose is not None and len(global_pose.shape) == 2:
+                # global_pose should be (248, 3), take the first n_frames
+                n_frames = min(len(batch_index), global_pose.shape[0])
+                global_pose = global_pose[:n_frames]
+            if jaw_pose is not None and len(jaw_pose.shape) == 2:
+                # jaw_pose should be (248, 3), take the first n_frames
+                n_frames = min(len(batch_index), jaw_pose.shape[0])
+                jaw_pose = jaw_pose[:n_frames]
+
+            # Concatenate expression, jaw_pose, and global_pose into (b, t, 56)
+            if expression is not None and global_pose is not None and jaw_pose is not None:
+                # Check if tensors are on CPU (numpy arrays) or GPU (tensors)
+                if hasattr(expression, 'cpu'):
+                    # If they're torch tensors, move to CPU and convert to numpy for concatenation
+                    exp_np = expression.cpu().numpy()
+                    jaw_np = jaw_pose.cpu().numpy()
+                    global_np = global_pose.cpu().numpy()
+
+                    # Concatenate along the last dimension: [50] + [3] + [3] = [56]
+                    flame = np.concatenate([exp_np, jaw_np, global_np], axis=-1)
+
+                    # Convert back to tensor
+                    flame = torch.from_numpy(flame).float()
+                else:
+                    # If they're numpy arrays
+                    flame = np.concatenate([expression, jaw_pose, global_pose], axis=-1)
+                    flame = torch.from_numpy(flame).float()
+
+        return pixel_values, control_pixel_values, face_pixel_values, background_pixel_values, mask, ref_pixel_values, text, "video",  flame
 
     def __len__(self):
         return self.length
@@ -856,7 +928,7 @@ class VideoAnimateDataset(Dataset):
                 if data_type_local != data_type:
                     raise ValueError("data_type_local != data_type")
 
-                pixel_values, control_pixel_values, face_pixel_values, background_pixel_values, mask, ref_pixel_values, name, data_type = \
+                pixel_values, control_pixel_values, face_pixel_values, background_pixel_values, mask, ref_pixel_values, name, data_type, flame = \
                     self.get_batch(idx)
 
                 sample["pixel_values"] = pixel_values
@@ -869,6 +941,10 @@ class VideoAnimateDataset(Dataset):
                 sample["text"] = name
                 sample["data_type"] = data_type
                 sample["idx"] = idx
+
+                # Add FLAME parameters to the sample
+                if flame is not None:
+                    sample["flame"] = flame
 
                 if len(sample) > 0:
                     break
