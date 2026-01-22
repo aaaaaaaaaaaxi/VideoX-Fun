@@ -569,6 +569,7 @@ class VideoAnimateDataset(Dataset):
         video_length_drop_start=0.1,
         video_length_drop_end=0.9,
         return_file_name=False,
+        enable_flame=False,
     ):
         # Loading annotations from files
         print(f"loading annotations from {ann_path} ...")
@@ -618,8 +619,8 @@ class VideoAnimateDataset(Dataset):
 
         self.larger_side_of_image_and_video = min(self.video_sample_size)
 
-        # Cache for loaded FLAME data to avoid repeated pickle file loading
-        self.flame_data_cache = {}
+        # FLAME parameter settings
+        self.enable_flame = enable_flame
     
     def get_batch(self, idx):
         data_info = self.dataset[idx % len(self.dataset)]
@@ -763,6 +764,7 @@ class VideoAnimateDataset(Dataset):
             else:
                 background_video_id = os.path.join(self.data_root, background_video_id)
             
+        # background 作为视频被提取
         if background_video_id is not None:
             with VideoReader_contextmanager(background_video_id, num_threads=2) as background_video_reader:
                 try:
@@ -845,77 +847,110 @@ class VideoAnimateDataset(Dataset):
         else:
             ref_pixel_values = np.array(ref_pixel_values)
 
-        # Load FLAME data from pickle file
-        flame_file_path = data_info.get('flame_file_path', None)
+        # Load FLAME data from pickle file (only if enabled)
         flame_data = None
+        if self.enable_flame:
+            flame_file_path = data_info.get('flame_file_path', None)
+            if flame_file_path is not None:
+                if self.data_root is not None:
+                    flame_file_path = os.path.join(self.data_root, flame_file_path)
 
-        # 加上data_root
-
-        if flame_file_path is not None:
-            if self.data_root is not None:
-                flame_file_path = os.path.join(self.data_root, flame_file_path)
-
-            # Load from cache if already loaded
-            if flame_file_path not in self.flame_data_cache:
+                # Load FLAME data directly from pickle file
                 try:
                     with open(flame_file_path, 'rb') as f:
                         flame_data = pickle.load(f)
-                        self.flame_data_cache[flame_file_path] = flame_data
                 except Exception as e:
                     print(f"Warning: Failed to load FLAME data from {flame_file_path}: {e}")
                     flame_data = None
-            else:
-                flame_data = self.flame_data_cache[flame_file_path]
 
-        # Extract FLAME parameters if data is loaded
+        # Extract FLAME parameters if data is loaded and FLAME is enabled
         expression = None
         global_pose = None
         jaw_pose = None
         flame = None
 
-        if flame_data is not None:
+        if flame_data is not None and self.enable_flame:
             # Extract the required fields based on the specified format
             expression = flame_data.get('expression', None)
             global_pose = flame_data.get('global_pose', None)
             jaw_pose = flame_data.get('jaw_pose', None)
 
-            # Ensure we have the correct dimensions
-            if expression is not None and len(expression.shape) == 2:
-                # expression should be (248, 50), take the first n_frames
-                n_frames = min(len(batch_index), expression.shape[0])
-                expression = expression[:n_frames]
-            if global_pose is not None and len(global_pose.shape) == 2:
-                # global_pose should be (248, 3), take the first n_frames
-                n_frames = min(len(batch_index), global_pose.shape[0])
-                global_pose = global_pose[:n_frames]
-            if jaw_pose is not None and len(jaw_pose.shape) == 2:
-                # jaw_pose should be (248, 3), take the first n_frames
-                n_frames = min(len(batch_index), jaw_pose.shape[0])
-                jaw_pose = jaw_pose[:n_frames]
+            # Validate all required parameters exist
+            if expression is None or global_pose is None or jaw_pose is None:
+                print(f"Warning: Missing FLAME parameters in {flame_file_path}. Required: expression, global_pose, jaw_pose")
+                flame = None
+            else:
+                try:
+                    # Determine the number of frames to use
+                    n_frames = min(len(batch_index), expression.shape[0])
 
-            # Concatenate expression, jaw_pose, and global_pose into (b, t, 56)
-            if expression is not None and global_pose is not None and jaw_pose is not None:
-                # Check if tensors are on CPU (numpy arrays) or GPU (tensors)
-                if hasattr(expression, 'cpu'):
-                    # If they're torch tensors, move to CPU and convert to numpy for concatenation
-                    exp_np = expression.cpu().numpy()
-                    jaw_np = jaw_pose.cpu().numpy()
-                    global_np = global_pose.cpu().numpy()
+                    # Ensure all parameters have correct dimensions and are 2D
+                    def _ensure_2d_and_truncate(param, name, expected_dim):
+                        if param is None:
+                            return None
 
-                    # Concatenate along the last dimension: [50] + [3] + [3] = [56]
-                    flame = np.concatenate([exp_np, jaw_np, global_np], axis=-1)
+                        # Reshape if needed (convert 3D to 2D)
+                        if param.ndim == 3:
+                            # If shape is (n_frames, seq_len, features), reshape to (n_frames, features)
+                            if param.shape[1] == expected_dim:
+                                param = param.reshape(-1, expected_dim)
+                            else:
+                                raise ValueError(f"Unexpected {name} shape: {param.shape}")
+                        elif param.ndim != 2:
+                            raise ValueError(f"{name} should be 2D, got {param.ndim}D")
 
-                    # Convert back to tensor
-                    flame = torch.from_numpy(flame).float()
-                else:
-                    # If they're numpy arrays
-                    flame = np.concatenate([expression, jaw_pose, global_pose], axis=-1)
-                    flame = torch.from_numpy(flame).float()
+                        # Truncate to n_frames
+                        return param[:n_frames]
+
+                    # Process all parameters
+                    expression = _ensure_2d_and_truncate(expression, "expression", 50)
+                    global_pose = _ensure_2d_and_truncate(global_pose, "global_pose", 3)
+                    jaw_pose = _ensure_2d_and_truncate(jaw_pose, "jaw_pose", 3)
+
+                    # Validate final shapes
+                    if expression is not None:
+                        assert expression.shape == (n_frames, 50), f"Expression shape mismatch: expected ({n_frames}, 50), got {expression.shape}"
+                    if global_pose is not None:
+                        assert global_pose.shape == (n_frames, 3), f"Global pose shape mismatch: expected ({n_frames}, 3), got {global_pose.shape}"
+                    if jaw_pose is not None:
+                        assert jaw_pose.shape == (n_frames, 3), f"Jaw pose shape mismatch: expected ({n_frames}, 3), got {jaw_pose.shape}"
+
+                    # Concatenate expression, jaw_pose, and global_pose into (b, t, 56)
+                    # Handle both torch tensors and numpy arrays
+                    if isinstance(expression, torch.Tensor):
+                        # Efficient concatenation without CPU-GPU transfer
+                        flame = torch.cat([expression, jaw_pose, global_pose], dim=-1)
+                    else:
+                        # For numpy arrays
+                        flame = torch.from_numpy(np.concatenate([expression, jaw_pose, global_pose], axis=-1)).float()
+
+                    print(f"Successfully loaded FLAME parameters with shape: {flame.shape}")
+
+                except Exception as e:
+                    print(f"Error processing FLAME parameters from {flame_file_path}: {str(e)}")
+                    flame = None
 
         return pixel_values, control_pixel_values, face_pixel_values, background_pixel_values, mask, ref_pixel_values, text, "video",  flame
 
     def __len__(self):
         return self.length
+
+    def has_flame_parameters(self, idx):
+        """Check if the sample at index has FLAME parameters available"""
+        if not self.enable_flame:
+            return False
+
+        data_info = self.dataset[idx % len(self.dataset)]
+        flame_file_path = data_info.get('flame_file_path', None)
+
+        if flame_file_path is None:
+            return False
+
+        # Check if flame file exists
+        if self.data_root is not None:
+            flame_file_path = os.path.join(self.data_root, flame_file_path)
+
+        return os.path.exists(flame_file_path)
 
     def __getitem__(self, idx):
         data_info = self.dataset[idx % len(self.dataset)]
@@ -937,6 +972,7 @@ class VideoAnimateDataset(Dataset):
                 sample["background_pixel_values"] = background_pixel_values
                 sample["mask"] = mask
                 sample["ref_pixel_values"] = ref_pixel_values
+                # ? 
                 sample["clip_pixel_values"] = ref_pixel_values
                 sample["text"] = name
                 sample["data_type"] = data_type

@@ -6,6 +6,7 @@ from typing import List
 
 import numpy as np
 import torch
+import torch.nn.functional as F
 import torch.cuda.amp as amp
 import torch.nn as nn
 from diffusers.configuration_utils import ConfigMixin, register_to_config
@@ -45,6 +46,7 @@ class Wan2_2Transformer3DModel_Animate(WanTransformer3DModel):
         qk_norm=True,
         cross_attn_norm=True,
         eps=1e-6,
+        # 原来的维度是512
         motion_encoder_dim=512,
         use_img_emb=True
     ):
@@ -70,27 +72,33 @@ class Wan2_2Transformer3DModel_Animate(WanTransformer3DModel):
         )
 
         self.face_encoder = FaceEncoder(
-            in_dim=motion_encoder_dim,
+            in_dim=motion_encoder_dim,  # 保持原来的维度以便加载预训练权重
             hidden_dim=self.dim,
             num_heads=4,
         )
+
+        # 创建FLAME参数到face_encoder输入维度的投影层
+        self.flame_projection = nn.Linear(56, motion_encoder_dim)
 
     def after_patch_embedding(self, x: List[torch.Tensor], pose_latents, face_pixel_values):
         pose_latents = [self.pose_patch_embedding(u.unsqueeze(0)) for u in pose_latents]
         for x_, pose_latents_ in zip(x, pose_latents):
             x_[:, :, 1:] += pose_latents_
-        
+
+        # FLAME参数已经在dataset中处理完毕，直接使用
+        # face_pixel_values在这里不再需要，保持兼容性但实际不使用
         b,c,T,h,w = face_pixel_values.shape
-        face_pixel_values = rearrange(face_pixel_values, "b c t h w -> (b t) c h w")
 
-        encode_bs = 8
-        face_pixel_values_tmp = []
-        for i in range(math.ceil(face_pixel_values.shape[0]/encode_bs)):
-            face_pixel_values_tmp.append(self.motion_encoder.get_motion(face_pixel_values[i*encode_bs:(i+1)*encode_bs]))
+        # motion_vec将直接使用FLAME参数替换
+        # FLAME参数形状: (B, T, 56) 其中56 = 50 (expression) + 3 (jaw_pose) + 3 (global_pose)
+        motion_vec = face_pixel_values  # 注意: 这里face_pixel_values实际存储的是FLAME参数
 
-        motion_vec = torch.cat(face_pixel_values_tmp)
-        
-        motion_vec = rearrange(motion_vec, "(b t) c -> b t c", t=T)
+        # 处理维度适配：FLAME参数 (B, T, 56) 需要适配到 face_encoder 的输入维度
+        if motion_vec.shape[-1] == 56:
+            # 使用投影层将FLAME参数从56维投影到motion_encoder_dim维
+            motion_vec = self.flame_projection(motion_vec)
+
+        motion_vec = rearrange(motion_vec, "b t c -> b t c")  # 确保维度正确
         motion_vec = self.face_encoder(motion_vec)
 
         B, L, H, C = motion_vec.shape

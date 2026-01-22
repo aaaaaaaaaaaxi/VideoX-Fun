@@ -163,6 +163,8 @@ check_min_version("0.18.0.dev0")
 
 logger = get_logger(__name__, log_level="INFO")
 
+
+# 注意，推理时是如何加上lora的
 def log_validation(vae, text_encoder, tokenizer, transformer3d, network, args, config, accelerator, weight_dtype, global_step):
     try:
         logger.info("Running validation... ")
@@ -187,6 +189,7 @@ def log_validation(vae, text_encoder, tokenizer, transformer3d, network, args, c
                 ).to(weight_dtype)
                 transformer3d_val.load_state_dict(accelerator.unwrap_model(transformer3d).state_dict())
 
+                # TODO: 为什么要定义两个transformer
                 sub_path = config['transformer_additional_kwargs'].get('transformer_high_noise_model_subpath', 'transformer')
                 transformer3d_2_val = Wan2_2Transformer3DModel_Animate.from_pretrained(
                     os.path.join(args.pretrained_model_name_or_path, sub_path),
@@ -889,6 +892,8 @@ def main():
         sub_path = config['transformer_additional_kwargs'].get('transformer_low_noise_model_subpath', 'transformer')
     else:
         sub_path = config['transformer_additional_kwargs'].get('transformer_high_noise_model_subpath', 'transformer')
+
+    # 初始化vit
     transformer3d = Wan2_2Transformer3DModel_Animate.from_pretrained(
         os.path.join(args.pretrained_model_name_or_path, sub_path),
         transformer_additional_kwargs=OmegaConf.to_container(config['transformer_additional_kwargs']),
@@ -931,6 +936,7 @@ def main():
             state_dict = torch.load(args.transformer_path, map_location="cpu")
         state_dict = state_dict["state_dict"] if "state_dict" in state_dict else state_dict
 
+
         m, u = transformer3d.load_state_dict(state_dict, strict=False)
         print(f"missing keys: {len(m)}, unexpected keys: {len(u)}")
 
@@ -949,6 +955,7 @@ def main():
     # `accelerate` 0.16.0 will have better support for customized saving
     if version.parse(accelerate.__version__) >= version.parse("0.16.0"):
         # create custom saving & loading hooks so that `accelerator.save_state(...)` serializes in a nice format
+        # 两种减少显存的方式各有自己的保存方法
         if fsdp_stage != 0:
             def save_model_hook(models, weights, output_dir):
                 accelerate_state_dict = accelerator.get_state_dict(models[-1], unwrap=True)
@@ -957,6 +964,7 @@ def main():
                     safetensor_save_path = os.path.join(output_dir, f"lora_diffusion_pytorch_model.safetensors")
                     if args.use_peft_lora:
                         network_state_dict = get_peft_model_state_dict(accelerator.unwrap_model(models[-1]), accelerate_state_dict)
+
                         network_state_dict_kohya = convert_peft_lora_to_kohya_lora(network_state_dict)
                         safetensor_kohya_format_save_path = os.path.join(output_dir, f"lora_diffusion_pytorch_model_compatible_with_comfyui.safetensors")
                         save_model(safetensor_kohya_format_save_path, network_state_dict_kohya)
@@ -995,6 +1003,7 @@ def main():
                     safetensor_save_path = os.path.join(output_dir, f"lora_diffusion_pytorch_model.safetensors")
                     if args.use_peft_lora:
                         network_state_dict = get_peft_model_state_dict(accelerator.unwrap_model(models[-1]), accelerate_state_dict)
+
                         network_state_dict_kohya = convert_peft_lora_to_kohya_lora(network_state_dict)
                         safetensor_kohya_format_save_path = os.path.join(output_dir, f"lora_diffusion_pytorch_model_compatible_with_comfyui.safetensors")
                         save_model(safetensor_kohya_format_save_path, network_state_dict_kohya)
@@ -1279,7 +1288,9 @@ def main():
                 ref_pixel_values = torch.from_numpy(example["ref_pixel_values"]).unsqueeze(0).permute(0, 3, 1, 2).contiguous()
                 ref_pixel_values = ref_pixel_values / 255.
 
+                # 使用 permute(0, 3, 1, 2) 调整维度顺序：(H, W, C) → (C, H, W)
                 background_pixel_values = torch.from_numpy(example["background_pixel_values"]).permute(0, 3, 1, 2).contiguous()
+                # 归一化
                 background_pixel_values = background_pixel_values / 255.
 
                 mask = torch.from_numpy(example["mask"]).permute(0, 3, 1, 2).contiguous()
@@ -1346,6 +1357,7 @@ def main():
 
                 new_examples["pixel_values"].append(transform(pixel_values)[:batch_video_length])
                 new_examples["control_pixel_values"].append(transform(control_pixel_values))
+                # 专门的512变换，强制调整为512*512
                 new_examples["face_pixel_values"].append(transform_512(face_pixel_values)[:batch_video_length])
                 new_examples["ref_pixel_values"].append(transform(ref_pixel_values))
                 new_examples["background_pixel_values"].append(transform(background_pixel_values)[:batch_video_length])
@@ -1678,6 +1690,7 @@ def main():
                         temp_n_frames = 1
 
                     # Magvae needs the number of frames to be 4n + 1.
+                    # 确保 MagVAE 需要的帧数格式（4n + 1）
                     temp_n_frames = (temp_n_frames - 1) // sample_n_frames_bucket_interval + 1
                 
                     pixel_values = pixel_values[:, :temp_n_frames, :, :]
@@ -1746,8 +1759,12 @@ def main():
                     else:
                         refert_num = rng.choice([0, 1], p = [0.75, 0.25])
 
+                    # 随机选择前几帧将主视频帧复制到背景中（概率 25%）
                     background_pixel_values[:, :refert_num, :] = pixel_values[:, :refert_num, :]
                     mask[:, :refert_num, :] = torch.zeros_like(mask[:, :refert_num, :])
+                    
+                    # 90% 概率将背景像素值置零
+                    # 对应的 mask 置为全 1                    
                     for bs_index in range(background_pixel_values.size()[0]):
                         if rng is None:
                             zero_init_background_pixel_values_conv_in = np.random.choice([0, 1], p = [0.90, 0.10])
@@ -1775,7 +1792,15 @@ def main():
                     y_ref       = torch.concat([mask_ref, ref_latents], dim=1).to(device=accelerator.device, dtype=weight_dtype)
                     y = torch.concat([y_ref, y_reft], dim=2)
 
-                    face_pixel_values = rearrange(face_pixel_values, "b c f h w -> b f c h w")
+                    # 维度重排用于模型输入
+                    # face_pixel_values 现在存储的是 FLAME 参数，直接传递给模型
+                    if flame is not None:
+                        # FLAME 参数形状: (B, F, 56)，需要调整为 (B, F, C, 1, 1) 以保持兼容性
+                        face_pixel_values = flame.unsqueeze(-1).unsqueeze(-1)  # (B, F, 56, 1, 1)
+                        face_pixel_values = rearrange(face_pixel_values, "b f c h w -> b f c h w")
+                    else:
+                        # 如果没有 FLAME 参数，使用原始 face_pixel_values
+                        face_pixel_values = rearrange(face_pixel_values, "b c f h w -> b f c h w")
 
                     clip_context = []
                     for clip_pixel_value in clip_pixel_values:
@@ -1862,6 +1887,7 @@ def main():
                 # Add noise
                 target = noise - latents
                 
+                # unwarp 解开模型的包装
                 target_shape = (vae.latent_channels, num_frames, width, height)
                 seq_len = math.ceil(
                     (target_shape[2] * target_shape[3]) /
