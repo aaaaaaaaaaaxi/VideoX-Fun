@@ -10,6 +10,7 @@ import glob
 from pathlib import Path
 from typing import List, Dict, Optional
 import argparse
+from tqdm import tqdm
 
 
 def build_dataset_json(
@@ -60,7 +61,7 @@ def build_dataset_json(
     # 获取所有视频文件的文件名（不带扩展名）
     video_basenames = [Path(f).stem for f in video_files]
 
-    for video_basename in video_basenames:
+    for video_basename in tqdm(video_basenames, leave=True):
         # 构建各文件的完整路径
         video_path = os.path.join(video_dir, f"{video_basename}.mp4")
         ref_path = os.path.join(ref_dir, f"{video_basename}.png")
@@ -85,6 +86,7 @@ def build_dataset_json(
             "control_file_path": "",  # 设为空，因为不需要控制
             "face_file_path": "",     # 设为空，因为不需要面部文件
             "ref_file_path": ref_path,
+            "flame_file_path": flame_path,
             "text": text_template,
             "type": "video",
             "height": height,

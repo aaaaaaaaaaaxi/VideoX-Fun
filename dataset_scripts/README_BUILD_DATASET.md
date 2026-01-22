@@ -38,6 +38,28 @@ python build_animate_dataset.py \
     --width 512
 ```
 
+```bash
+python build_animate_dataset.py \
+    --video_dir /hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample \
+    --ref_dir /hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_first_frame \
+    --flame_dir /hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample_flame_params \
+    --output dataset.json \
+    --text "视频中的人在讲话" \
+    --height 512 \
+    --width 512
+```
+
+```bash
+python build_animate_dataset.py \
+    --video_dir /hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512 \
+    --ref_dir /hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame \
+    --flame_dir /hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params \
+    --output dataset_MEAD.json \
+    --text "视频中的人在讲话" \
+    --height 512 \
+    --width 512
+```
+
 ### 方法2：使用Python函数调用
 
 ```python
