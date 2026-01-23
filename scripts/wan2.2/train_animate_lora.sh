@@ -1,20 +1,20 @@
 export MODEL_NAME="models/Diffusion_Transformer/Wan2.2-Animate-14B/"
-export DATASET_NAME="datasets/internal_datasets/"
-export DATASET_META_NAME="datasets/internal_datasets/metadata_control.json"
+export DATASET_NAME=""
+export DATASET_META_NAME="/hpc2hdd/home/ntang745/workspace/VideoX-Fun/datasets/dataset_CelebV-HQ_MEAD_train_55385.json"
 # NCCL_IB_DISABLE=1 and NCCL_P2P_DISABLE=1 are used in multi nodes without RDMA. 
 # export NCCL_IB_DISABLE=1
 # export NCCL_P2P_DISABLE=1
 NCCL_DEBUG=INFO
 
-accelerate launch --mixed_precision="bf16" scripts/wan2.2/train_animate_lora.py \
+CUDA_VISIBLE_DEVICES=0,1 accelerate launch --multi_gpu --num_processes 2 --gpu_ids 0,1 --main_process_port 29501 --mixed_precision="bf16" scripts/wan2.2/train_animate_lora.py \
   --config_path="config/wan2.2/wan_civitai_animate.yaml" \
   --pretrained_model_name_or_path=$MODEL_NAME \
   --train_data_dir=$DATASET_NAME \
   --train_data_meta=$DATASET_META_NAME \
-  --video_sample_size=640 \
-  --token_sample_size=640 \
+  --video_sample_size=512 \
+  --token_sample_size=512 \
   --video_sample_stride=2 \
-  --video_sample_n_frames=81 \
+  --video_sample_n_frames=49 \
   --train_batch_size=1 \
   --video_repeat=1 \
   --gradient_accumulation_steps=1 \
@@ -37,6 +37,5 @@ accelerate launch --mixed_precision="bf16" scripts/wan2.2/train_animate_lora.py 
   --boundary_type="full" \
   --rank=64 \
   --network_alpha=32 \
-  --target_name="q,k,v,ffn.0,ffn.2" \
   --use_peft_lora \
   --low_vram
