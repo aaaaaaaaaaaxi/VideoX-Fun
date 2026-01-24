@@ -37,5 +37,6 @@ CUDA_VISIBLE_DEVICES=0,1 accelerate launch --multi_gpu --num_processes 2 --gpu_i
   --boundary_type="full" \
   --rank=64 \
   --network_alpha=32 \
+  --target_name="q,k,v,ffn.0,ffn.2" \
   --use_peft_lora \
   --low_vram
