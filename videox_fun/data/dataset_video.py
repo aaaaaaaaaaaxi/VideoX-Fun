@@ -569,7 +569,7 @@ class VideoAnimateDataset(Dataset):
         video_length_drop_start=0.1,
         video_length_drop_end=0.9,
         return_file_name=False,
-        enable_flame=False,
+        enable_flame=True,
     ):
         # Loading annotations from files
         print(f"loading annotations from {ann_path} ...")

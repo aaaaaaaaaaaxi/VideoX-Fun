@@ -906,6 +906,7 @@ def main():
     clip_image_encoder.requires_grad_(False)
 
     # Lora will work with this...
+    # 只为指定的模块加载lora
     if args.use_peft_lora:
         from peft import (LoraConfig, get_peft_model_state_dict,
                           inject_adapter_in_model)
@@ -1792,15 +1793,7 @@ def main():
                     y_ref       = torch.concat([mask_ref, ref_latents], dim=1).to(device=accelerator.device, dtype=weight_dtype)
                     y = torch.concat([y_ref, y_reft], dim=2)
 
-                    # 维度重排用于模型输入
-                    # face_pixel_values 现在存储的是 FLAME 参数，直接传递给模型
-                    if flame is not None:
-                        # FLAME 参数形状: (B, F, 56)，需要调整为 (B, F, C, 1, 1) 以保持兼容性
-                        face_pixel_values = flame.unsqueeze(-1).unsqueeze(-1)  # (B, F, 56, 1, 1)
-                        face_pixel_values = rearrange(face_pixel_values, "b f c h w -> b f c h w")
-                    else:
-                        # 如果没有 FLAME 参数，使用原始 face_pixel_values
-                        face_pixel_values = rearrange(face_pixel_values, "b c f h w -> b f c h w")
+                    face_pixel_values = rearrange(face_pixel_values, "b c f h w -> b f c h w")
 
                     clip_context = []
                     for clip_pixel_value in clip_pixel_values:
