@@ -631,6 +631,8 @@ class VideoAnimateDataset(Dataset):
         else:
             video_dir = os.path.join(self.data_root, video_id)
 
+        print(video_dir)
+
         with VideoReader_contextmanager(video_dir, num_threads=2) as video_reader:
             min_sample_n_frames = min(
                 self.video_sample_n_frames, 
