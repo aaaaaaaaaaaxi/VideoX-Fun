@@ -21,6 +21,7 @@ CUDA_VISIBLE_DEVICES=0,1 accelerate launch --multi_gpu --num_processes 2 --gpu_i
   --dataloader_num_workers=1 \
   --num_train_epochs=100 \
   --checkpointing_steps=50 \
+  --validation_steps=50 \
   --learning_rate=1e-04 \
   --seed=42 \
   --output_dir="output_dir" \
@@ -37,6 +38,7 @@ CUDA_VISIBLE_DEVICES=0,1 accelerate launch --multi_gpu --num_processes 2 --gpu_i
   --boundary_type="full" \
   --rank=64 \
   --network_alpha=32 \
-  --target_name="q,k,v,ffn.0,ffn.2" \
+  --target_name="q,k,v,ffn.0,ffn.2,face_adapter,face_encoder" \
+  --lora_skip_name="motion_encoder" \
   --use_peft_lora \
   --low_vram

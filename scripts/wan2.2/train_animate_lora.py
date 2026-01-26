@@ -223,6 +223,7 @@ def log_validation(vae, text_encoder, tokenizer, transformer3d, network, args, c
         )
         pipeline = pipeline.to(accelerator.device)
 
+        # 添加 lora
         pipeline = merge_lora(
             pipeline, None, 1, accelerator.device, state_dict=accelerator.unwrap_model(network).state_dict(), transformer_only=True
         )
@@ -232,6 +233,7 @@ def log_validation(vae, text_encoder, tokenizer, transformer3d, network, args, c
         else:
             generator = torch.Generator(device=accelerator.device).manual_seed(args.seed)
 
+        # 保存验证结果
         images = []
         for i in range(len(args.validation_prompts)):
             with torch.no_grad():
@@ -906,7 +908,6 @@ def main():
     clip_image_encoder.requires_grad_(False)
 
     # Lora will work with this...
-    # 只为指定的模块加载lora
     if args.use_peft_lora:
         from peft import (LoraConfig, get_peft_model_state_dict,
                           inject_adapter_in_model)
@@ -1135,6 +1136,7 @@ def main():
         video_sample_size=args.video_sample_size, video_sample_stride=args.video_sample_stride, video_sample_n_frames=args.video_sample_n_frames, 
         video_repeat=args.video_repeat, 
         enable_bucket=args.enable_bucket, 
+        enable_flame=True,
     )
 
     def worker_init_fn(_seed):
@@ -1207,6 +1209,7 @@ def main():
             length_to_frame_num = get_length_to_frame_num(target_token_length)
 
             # Create new output
+            # 创建list用于堆叠，在1373行开始堆叠
             new_examples                 = {}
             new_examples["target_token_length"] = target_token_length
             new_examples["pixel_values"] = []
@@ -1215,6 +1218,8 @@ def main():
             new_examples["control_pixel_values"] = []
             # Used in Face pixel values
             new_examples["face_pixel_values"] = []
+            # Used in FLAME values
+            new_examples["flame"] = []
             # Used in Ref pixel values
             new_examples["ref_pixel_values"] = []
             # Used in Background pixel values
@@ -1283,8 +1288,12 @@ def main():
                 control_pixel_values = torch.from_numpy(example["control_pixel_values"]).permute(0, 3, 1, 2).contiguous()
                 control_pixel_values = control_pixel_values / 255.
 
+                # 维度重排：(frame, height, width, channel) → (frame, channel, height, width)
                 face_pixel_values = torch.from_numpy(example["face_pixel_values"]).permute(0, 3, 1, 2).contiguous()
                 face_pixel_values = face_pixel_values / 255.
+
+                # FLAME 参数形状为 (frame, channel=56)
+                flame = torch.from_numpy(example["flame"])
 
                 ref_pixel_values = torch.from_numpy(example["ref_pixel_values"]).unsqueeze(0).permute(0, 3, 1, 2).contiguous()
                 ref_pixel_values = ref_pixel_values / 255.
@@ -1360,6 +1369,8 @@ def main():
                 new_examples["control_pixel_values"].append(transform(control_pixel_values))
                 # 专门的512变换，强制调整为512*512
                 new_examples["face_pixel_values"].append(transform_512(face_pixel_values)[:batch_video_length])
+                # flame形状为 (batch，frame，channel)
+                new_examples["flame"].append(flame[:batch_video_length])               
                 new_examples["ref_pixel_values"].append(transform(ref_pixel_values))
                 new_examples["background_pixel_values"].append(transform(background_pixel_values)[:batch_video_length])
                 new_examples["mask"].append(transform_no_normalize(mask)[:batch_video_length])
@@ -1370,6 +1381,8 @@ def main():
             new_examples["pixel_values"] = torch.stack([example for example in new_examples["pixel_values"]])
             new_examples["control_pixel_values"] = torch.stack([example[:batch_video_length] for example in new_examples["control_pixel_values"]])
             new_examples["face_pixel_values"] = torch.stack([example for example in new_examples["face_pixel_values"]])
+            # stack batches of flame
+            new_examples["flame"] = torch.stack([example for example in new_examples["flame"]])
             new_examples["ref_pixel_values"] = torch.stack([example for example in new_examples["ref_pixel_values"]])
             new_examples["background_pixel_values"] = torch.stack([example for example in new_examples["background_pixel_values"]])
             new_examples["clip_pixel_values"] = torch.stack([example for example in new_examples["clip_pixel_values"]])
@@ -1579,9 +1592,12 @@ def main():
         train_sampling_steps = args.train_sampling_steps
     idx_sampling = DiscreteSampling(train_sampling_steps, start_num_idx=start_num_idx, uniform_sampling=args.uniform_sampling)
 
+    # TODO: start training?
     for epoch in range(first_epoch, args.num_train_epochs):
         train_loss = 0.0
         batch_sampler.sampler.generator = torch.Generator().manual_seed(args.seed + epoch)
+
+        # validation?
         for step, batch in enumerate(train_dataloader):
             # Data batch sanity check
             if epoch == first_epoch and step == 0:
@@ -1632,6 +1648,7 @@ def main():
                 face_pixel_values = batch["face_pixel_values"].to(weight_dtype)
                 ref_pixel_values = batch["ref_pixel_values"].to(weight_dtype)
                 background_pixel_values = batch["background_pixel_values"].to(weight_dtype)
+                flame = batch["flame"].to(weight_dtype)
                 mask = batch["mask"].to(weight_dtype)
                 clip_pixel_values = batch["clip_pixel_values"].to(weight_dtype)
 
@@ -1644,6 +1661,8 @@ def main():
                         ref_pixel_values = torch.tile(ref_pixel_values, (4, 1, 1, 1, 1))
                         background_pixel_values = torch.tile(background_pixel_values, (4, 1, 1, 1, 1))
                         mask = torch.tile(mask, (4, 1, 1, 1, 1))
+                        # 动态批次扩展，当序列较小时，通过复制扩展批次大小
+                        flame = torch.tile(flame, (4, 1, 1))
 
                         clip_pixel_values = torch.tile(clip_pixel_values, (4, 1, 1, 1))
 
@@ -1660,6 +1679,8 @@ def main():
                         ref_pixel_values = torch.tile(ref_pixel_values, (2, 1, 1, 1, 1))
                         background_pixel_values = torch.tile(background_pixel_values, (2, 1, 1, 1, 1))
                         mask = torch.tile(mask, (2, 1, 1, 1, 1))
+                        # 动态批次扩展，当序列较小时，通过复制扩展批次大小
+                        flame = torch.tile(flame, (2, 1, 1))
 
                         clip_pixel_values = torch.tile(clip_pixel_values, (2, 1, 1, 1))
 
@@ -1699,6 +1720,7 @@ def main():
                     face_pixel_values = face_pixel_values[:, :temp_n_frames, :, :]
                     background_pixel_values = background_pixel_values[:, :temp_n_frames, :, :]
                     mask = mask[:, :temp_n_frames, :, :]
+                    flame = flame[:, :temp_n_frames, :]
                     
                 # Keep all node same token length to accelerate the traning when resolution grows.
                 if args.keep_all_node_same_token_length:
@@ -1725,6 +1747,7 @@ def main():
                     face_pixel_values = face_pixel_values[:, :actual_video_length, :, :]
                     background_pixel_values = background_pixel_values[:, :actual_video_length, :, :]
                     mask = mask[:, :actual_video_length, :, :]
+                    flame = flame[:, :actual_video_length, :]
 
                 if args.low_vram:
                     torch.cuda.empty_cache()
@@ -1794,6 +1817,7 @@ def main():
                     y = torch.concat([y_ref, y_reft], dim=2)
 
                     face_pixel_values = rearrange(face_pixel_values, "b c f h w -> b f c h w")
+                    flame = rearrange(flame, "b c f -> b f c")
 
                     clip_context = []
                     for clip_pixel_value in clip_pixel_values:
@@ -1898,9 +1922,11 @@ def main():
                         y=y,
                         clip_fea=clip_context,
                         pose_latents=control_latents,
-                        face_pixel_values=face_pixel_values,
+                        # face_pixel_values=face_pixel_values,
+                        flame=flame,
                     )
                 
+                # loss 定义
                 def custom_mse_loss(noise_pred, target, weighting=None, threshold=50):
                     noise_pred = noise_pred.float()
                     target = target.float()

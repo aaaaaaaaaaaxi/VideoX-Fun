@@ -177,6 +177,7 @@ class Wan2_2FunControlPipeline(DiffusionPipeline):
     ):
         super().__init__()
 
+        # 为什么要两个transformer
         self.register_modules(
             tokenizer=tokenizer, text_encoder=text_encoder, vae=vae, transformer=transformer, 
             transformer_2=transformer_2, scheduler=scheduler

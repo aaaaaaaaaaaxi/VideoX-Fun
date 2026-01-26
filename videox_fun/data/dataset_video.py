@@ -184,20 +184,28 @@ class VideoDataset(Dataset):
     def __len__(self):
         return self.length
 
+    # TODO:
     def __getitem__(self, idx):
         while True:
             sample = {}
-            try:
-                pixel_values, name = self.get_batch(idx)
-                sample["pixel_values"] = pixel_values
-                sample["text"] = name
-                sample["idx"] = idx
-                if len(sample) > 0:
-                    break
+            pixel_values, name = self.get_batch(idx)
+            sample["pixel_values"] = pixel_values
+            sample["text"] = name
+            sample["idx"] = idx
+            if len(sample) > 0:
+                break
 
-            except Exception as e:
-                print(e, self.dataset[idx % len(self.dataset)])
-                idx = random.randint(0, self.length-1)
+            # try:
+            #     pixel_values, name = self.get_batch(idx)
+            #     sample["pixel_values"] = pixel_values
+            #     sample["text"] = name
+            #     sample["idx"] = idx
+            #     if len(sample) > 0:
+            #         break
+
+            # except Exception as e:
+            #     print(e, self.dataset[idx % len(self.dataset)])
+            #     idx = random.randint(0, self.length-1)
 
         if self.enable_inpaint and not self.enable_bucket:
             mask = get_random_mask(pixel_values.size())
@@ -631,8 +639,6 @@ class VideoAnimateDataset(Dataset):
         else:
             video_dir = os.path.join(self.data_root, video_id)
 
-        print(video_dir)
-
         with VideoReader_contextmanager(video_dir, num_threads=2) as video_reader:
             min_sample_n_frames = min(
                 self.video_sample_n_frames, 
@@ -873,6 +879,7 @@ class VideoAnimateDataset(Dataset):
 
         if flame_data is not None and self.enable_flame:
             # Extract the required fields based on the specified format
+            # shape:(frame,channel)
             expression = flame_data.get('expression', None)
             global_pose = flame_data.get('global_pose', None)
             jaw_pose = flame_data.get('jaw_pose', None)
@@ -901,7 +908,7 @@ class VideoAnimateDataset(Dataset):
                         elif param.ndim != 2:
                             raise ValueError(f"{name} should be 2D, got {param.ndim}D")
 
-                        # Truncate to n_frames
+                        # Truncate to n_frames and transpose to [channel, frame]
                         return param[:n_frames]
 
                     # Process all parameters
@@ -915,9 +922,9 @@ class VideoAnimateDataset(Dataset):
                     if global_pose is not None:
                         assert global_pose.shape == (n_frames, 3), f"Global pose shape mismatch: expected ({n_frames}, 3), got {global_pose.shape}"
                     if jaw_pose is not None:
-                        assert jaw_pose.shape == (n_frames, 3), f"Jaw pose shape mismatch: expected ({n_frames}, 3), got {jaw_pose.shape}"
+                        assert jaw_pose.shape == (n_frames, 3), f"Jaw pose shape mismatch: expected ({n_frames},3), got {jaw_pose.shape}"
 
-                    # Concatenate expression, jaw_pose, and global_pose into (b, t, 56)
+                    # Concatenate expression, jaw_pose, and global_pose into (t, 56)
                     # Handle both torch tensors and numpy arrays
                     if isinstance(expression, torch.Tensor):
                         # Efficient concatenation without CPU-GPU transfer
@@ -936,23 +943,6 @@ class VideoAnimateDataset(Dataset):
 
     def __len__(self):
         return self.length
-
-    def has_flame_parameters(self, idx):
-        """Check if the sample at index has FLAME parameters available"""
-        if not self.enable_flame:
-            return False
-
-        data_info = self.dataset[idx % len(self.dataset)]
-        flame_file_path = data_info.get('flame_file_path', None)
-
-        if flame_file_path is None:
-            return False
-
-        # Check if flame file exists
-        if self.data_root is not None:
-            flame_file_path = os.path.join(self.data_root, flame_file_path)
-
-        return os.path.exists(flame_file_path)
 
     def __getitem__(self, idx):
         data_info = self.dataset[idx % len(self.dataset)]
