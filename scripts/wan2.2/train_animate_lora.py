@@ -1294,6 +1294,7 @@ def main():
 
                 # FLAME 参数形状为 (frame, channel=56)
                 flame = torch.from_numpy(example["flame"])
+                print(flame.shape)
 
                 ref_pixel_values = torch.from_numpy(example["ref_pixel_values"]).unsqueeze(0).permute(0, 3, 1, 2).contiguous()
                 ref_pixel_values = ref_pixel_values / 255.
@@ -1383,6 +1384,9 @@ def main():
             new_examples["face_pixel_values"] = torch.stack([example for example in new_examples["face_pixel_values"]])
             # stack batches of flame
             new_examples["flame"] = torch.stack([example for example in new_examples["flame"]])
+
+            print(new_examples["flame"].shape)
+
             new_examples["ref_pixel_values"] = torch.stack([example for example in new_examples["ref_pixel_values"]])
             new_examples["background_pixel_values"] = torch.stack([example for example in new_examples["background_pixel_values"]])
             new_examples["clip_pixel_values"] = torch.stack([example for example in new_examples["clip_pixel_values"]])
@@ -1619,6 +1623,10 @@ def main():
                     face_pixel_value = face_pixel_value[None, ...]
                     gif_name = '-'.join(text.replace('/', '').split()[:10]) if not text == '' else f'{global_step}-{idx}'
                     save_videos_grid(face_pixel_value, f"{args.output_dir}/sanity_check/{gif_name[:10]}_face.gif", rescale=True)
+
+
+                # TODO: 考虑一下如何保存flame
+                # flame = batch["flame"].cpu()
                     
                 ref_pixel_values = batch["ref_pixel_values"].cpu()
                 ref_pixel_values = rearrange(ref_pixel_values, "b f c h w -> b c f h w")
@@ -1649,6 +1657,7 @@ def main():
                 ref_pixel_values = batch["ref_pixel_values"].to(weight_dtype)
                 background_pixel_values = batch["background_pixel_values"].to(weight_dtype)
                 flame = batch["flame"].to(weight_dtype)
+                print(batch["flame"].shape)
                 mask = batch["mask"].to(weight_dtype)
                 clip_pixel_values = batch["clip_pixel_values"].to(weight_dtype)
 
@@ -1720,6 +1729,7 @@ def main():
                     face_pixel_values = face_pixel_values[:, :temp_n_frames, :, :]
                     background_pixel_values = background_pixel_values[:, :temp_n_frames, :, :]
                     mask = mask[:, :temp_n_frames, :, :]
+                    # 81 to 77
                     flame = flame[:, :temp_n_frames, :]
                     
                 # Keep all node same token length to accelerate the traning when resolution grows.
@@ -1816,8 +1826,12 @@ def main():
                     y_ref       = torch.concat([mask_ref, ref_latents], dim=1).to(device=accelerator.device, dtype=weight_dtype)
                     y = torch.concat([y_ref, y_reft], dim=2)
 
-                    face_pixel_values = rearrange(face_pixel_values, "b c f h w -> b f c h w")
-                    flame = rearrange(flame, "b c f -> b f c")
+                    # 原来的代码有误！
+                    # face_pixel_values = rearrange(face_pixel_values, "b c f h w -> b f c h w")
+                    face_pixel_values = rearrange(face_pixel_values, "b f c h w -> b c f h w")
+
+                    # 这里flame保持 (b,f,c) 输入 transformer 即可, 无需和 face_pixel_values 一样变换维度
+                    # flame = rearrange(flame, "b c f -> b f c")
 
                     clip_context = []
                     for clip_pixel_value in clip_pixel_values:

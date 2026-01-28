@@ -187,25 +187,27 @@ class VideoDataset(Dataset):
     # TODO:
     def __getitem__(self, idx):
         while True:
+
             sample = {}
-            pixel_values, name = self.get_batch(idx)
-            sample["pixel_values"] = pixel_values
-            sample["text"] = name
-            sample["idx"] = idx
-            if len(sample) > 0:
-                break
 
-            # try:
-            #     pixel_values, name = self.get_batch(idx)
-            #     sample["pixel_values"] = pixel_values
-            #     sample["text"] = name
-            #     sample["idx"] = idx
-            #     if len(sample) > 0:
-            #         break
+            # pixel_values, name = self.get_batch(idx)
+            # sample["pixel_values"] = pixel_values
+            # sample["text"] = name
+            # sample["idx"] = idx
+            # if len(sample) > 0:
+            #     break
 
-            # except Exception as e:
-            #     print(e, self.dataset[idx % len(self.dataset)])
-            #     idx = random.randint(0, self.length-1)
+            try:
+                pixel_values, name = self.get_batch(idx)
+                sample["pixel_values"] = pixel_values
+                sample["text"] = name
+                sample["idx"] = idx
+                if len(sample) > 0:
+                    break
+
+            except Exception as e:
+                print(e, self.dataset[idx % len(self.dataset)])
+                idx = random.randint(0, self.length-1)
 
         if self.enable_inpaint and not self.enable_bucket:
             mask = get_random_mask(pixel_values.size())
@@ -682,7 +684,9 @@ class VideoAnimateDataset(Dataset):
             if random.random() < self.text_drop_ratio:
                 text = ''
 
-        control_video_id = data_info['control_file_path']
+        # control_video_id = data_info['control_file_path']
+        control_video_id = data_info.get('control_file_path', None)
+        
         
         if control_video_id is not None:
             if self.data_root is None:
@@ -723,7 +727,8 @@ class VideoAnimateDataset(Dataset):
             else:
                 control_pixel_values = np.zeros_like(pixel_values)
 
-        face_video_id = data_info['face_file_path']
+        # face_video_id = data_info['face_file_path']
+        face_video_id = data_info.get('face_file_path', None)
         
         if face_video_id is not None:
             if self.data_root is None:
@@ -855,6 +860,7 @@ class VideoAnimateDataset(Dataset):
         else:
             ref_pixel_values = np.array(ref_pixel_values)
 
+
         # Load FLAME data from pickle file (only if enabled)
         flame_data = None
         if self.enable_flame:
@@ -931,7 +937,7 @@ class VideoAnimateDataset(Dataset):
                         flame = torch.cat([expression, jaw_pose, global_pose], dim=-1)
                     else:
                         # For numpy arrays
-                        flame = torch.from_numpy(np.concatenate([expression, jaw_pose, global_pose], axis=-1)).float()
+                        flame = np.concatenate([expression, jaw_pose, global_pose], axis=-1).astype(np.float32)
 
                     print(f"Successfully loaded FLAME parameters with shape: {flame.shape}")
 
@@ -939,46 +945,78 @@ class VideoAnimateDataset(Dataset):
                     print(f"Error processing FLAME parameters from {flame_file_path}: {str(e)}")
                     flame = None
 
+        print("pixel_values type:", type(pixel_values))
+        print("flame type:", type(flame))
+
         return pixel_values, control_pixel_values, face_pixel_values, background_pixel_values, mask, ref_pixel_values, text, "video",  flame
 
     def __len__(self):
         return self.length
 
+    # TODO:
     def __getitem__(self, idx):
         data_info = self.dataset[idx % len(self.dataset)]
         data_type = data_info.get('type', 'image')
         while True:
             sample = {}
-            try:
-                data_info_local = self.dataset[idx % len(self.dataset)]
-                data_type_local = data_info_local.get('type', 'image')
-                if data_type_local != data_type:
-                    raise ValueError("data_type_local != data_type")
 
-                pixel_values, control_pixel_values, face_pixel_values, background_pixel_values, mask, ref_pixel_values, name, data_type, flame = \
-                    self.get_batch(idx)
+            # try:
+            #     data_info_local = self.dataset[idx % len(self.dataset)]
+            #     data_type_local = data_info_local.get('type', 'image')
+            #     if data_type_local != data_type:
+            #         raise ValueError("data_type_local != data_type")
 
-                sample["pixel_values"] = pixel_values
-                sample["control_pixel_values"] = control_pixel_values
-                sample["face_pixel_values"] = face_pixel_values
-                sample["background_pixel_values"] = background_pixel_values
-                sample["mask"] = mask
-                sample["ref_pixel_values"] = ref_pixel_values
-                # ? 
-                sample["clip_pixel_values"] = ref_pixel_values
-                sample["text"] = name
-                sample["data_type"] = data_type
-                sample["idx"] = idx
+            #     pixel_values, control_pixel_values, face_pixel_values, background_pixel_values, mask, ref_pixel_values, name, data_type, flame = \
+            #         self.get_batch(idx)
 
-                # Add FLAME parameters to the sample
-                if flame is not None:
-                    sample["flame"] = flame
+            #     sample["pixel_values"] = pixel_values
+            #     sample["control_pixel_values"] = control_pixel_values
+            #     sample["face_pixel_values"] = face_pixel_values
+            #     sample["background_pixel_values"] = background_pixel_values
+            #     sample["mask"] = mask
+            #     sample["ref_pixel_values"] = ref_pixel_values
+            #     # ? 
+            #     sample["clip_pixel_values"] = ref_pixel_values
+            #     sample["text"] = name
+            #     sample["data_type"] = data_type
+            #     sample["idx"] = idx
 
-                if len(sample) > 0:
-                    break
-            except Exception as e:
-                print(e, self.dataset[idx % len(self.dataset)])
-                idx = random.randint(0, self.length-1)
+            #     # Add FLAME parameters to the sample
+            #     if flame is not None:
+            #         sample["flame"] = flame
+
+            #     if len(sample) > 0:
+            #         break
+            # except Exception as e:
+            #     print(e, self.dataset[idx % len(self.dataset)])
+            #     idx = random.randint(0, self.length-1)
+
+            data_info_local = self.dataset[idx % len(self.dataset)]
+            data_type_local = data_info_local.get('type', 'image')
+            if data_type_local != data_type:
+                raise ValueError("data_type_local != data_type")
+
+            pixel_values, control_pixel_values, face_pixel_values, background_pixel_values, mask, ref_pixel_values, name, data_type, flame = \
+                self.get_batch(idx)
+
+            sample["pixel_values"] = pixel_values
+            sample["control_pixel_values"] = control_pixel_values
+            sample["face_pixel_values"] = face_pixel_values
+            sample["background_pixel_values"] = background_pixel_values
+            sample["mask"] = mask
+            sample["ref_pixel_values"] = ref_pixel_values
+            # ? 
+            sample["clip_pixel_values"] = ref_pixel_values
+            sample["text"] = name
+            sample["data_type"] = data_type
+            sample["idx"] = idx
+
+            # Add FLAME parameters to the sample
+            if flame is not None:
+                sample["flame"] = flame
+
+            if len(sample) > 0:
+                break
 
         return sample
 

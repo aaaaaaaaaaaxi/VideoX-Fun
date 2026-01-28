@@ -87,6 +87,7 @@ class Wan2_2Transformer3DModel_Animate(WanTransformer3DModel):
     #     for x_, pose_latents_ in zip(x, pose_latents):
     #         x_[:, :, 1:] += pose_latents_
         
+    # '''送入 transformer 前进行过一次维度重排，face_pixel_values = rearrange(face_pixel_values, "b f c h w -> b c f h w")'''
     #     b,c,T,h,w = face_pixel_values.shape
     #     face_pixel_values = rearrange(face_pixel_values, "b c t h w -> (b t) c h w")
 
@@ -118,12 +119,17 @@ class Wan2_2Transformer3DModel_Animate(WanTransformer3DModel):
         # FLAME参数形状: (B, T, 56) 其中56 = 50 (expression) + 3 (jaw_pose) + 3 (global_pose)
         motion_vec = flame
 
+        print(motion_vec.shape)
+
         # 处理维度适配：FLAME参数 (B, T, 56) 需要适配到 face_encoder 的输入维度
         if motion_vec.shape[-1] == 56:
             # 使用投影层将FLAME参数从56维投影到motion_encoder_dim维
             motion_vec = self.flame_projection(motion_vec)
 
-        # 送入face_encoder前确保维度正确 (b,t,c=128)
+        print(motion_vec.shape)
+
+
+        # 送入face_encoder前确保维度正确 (b,t,c=512)
         # motion_vec = rearrange(motion_vec, "b t c -> b t c")
         motion_vec = self.face_encoder(motion_vec)
 
@@ -307,6 +313,7 @@ class Wan2_2Transformer3DModel_Animate(WanTransformer3DModel):
                         **ckpt_kwargs,
                     )
                     x, motion_vec = x.to(dtype), motion_vec.to(dtype)
+                    # 这个代码运行了
                     x = self.after_transformer_block(idx, x, motion_vec)
                 else:
                     # arguments

@@ -8,6 +8,8 @@ import numpy as np
 from einops import rearrange
 from torch import nn
 
+# from flash_attn import flash_attn_func, flash_attn_qkvpacked_func
+
 try:
     from flash_attn import flash_attn_func, flash_attn_qkvpacked_func
 except ImportError:
@@ -34,7 +36,7 @@ def attention(
     q,
     k,
     v,
-    mode="flash",
+    mode="torch",
     drop_rate=0,
     attn_mask=None,
     causal=False,
@@ -373,6 +375,11 @@ class FaceBlock(nn.Module):
             
         q = rearrange(q, "B (L S) H D -> (B L) S H D", L=T_comp)  
         q, k, v = q.to(dtype), k.to(dtype), v.to(dtype)
+
+        print(f"Q shape: {q.shape}")
+        print(f"K shape: {k.shape}")
+        print(f"V shape: {v.shape}")
+
         # Compute attention.
         attn = attention(
             q,

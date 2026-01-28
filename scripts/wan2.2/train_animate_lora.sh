@@ -14,7 +14,7 @@ CUDA_VISIBLE_DEVICES=0,1 accelerate launch --multi_gpu --num_processes 2 --gpu_i
   --video_sample_size=512 \
   --token_sample_size=512 \
   --video_sample_stride=2 \
-  --video_sample_n_frames=49 \
+  --video_sample_n_frames=81 \
   --train_batch_size=1 \
   --video_repeat=1 \
   --gradient_accumulation_steps=1 \
@@ -38,7 +38,6 @@ CUDA_VISIBLE_DEVICES=0,1 accelerate launch --multi_gpu --num_processes 2 --gpu_i
   --boundary_type="full" \
   --rank=64 \
   --network_alpha=32 \
-  --target_name="q,k,v,ffn.0,ffn.2,face_adapter,face_encoder" \
-  --lora_skip_name="motion_encoder" \
+  --target_name="q,k,v,ffn.0,ffn.2" \
   --use_peft_lora \
   --low_vram
