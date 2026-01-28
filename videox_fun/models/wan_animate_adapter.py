@@ -36,7 +36,7 @@ def attention(
     q,
     k,
     v,
-    mode="torch",
+    mode="flash",
     drop_rate=0,
     attn_mask=None,
     causal=False,
@@ -78,6 +78,7 @@ def attention(
             k,
             v,
         )
+        # 已经设定 max_seqlen_q=q.shape[1],
         x = x.view(batch_size, max_seqlen_q, x.shape[-2], x.shape[-1])  # reshape x to [b, s, a, d]
     elif mode == "vanilla":
         scale_factor = 1 / math.sqrt(q.size(-1))
@@ -98,6 +99,7 @@ def attention(
             else:
                 attn_bias += attn_mask
 
+        # 如果qk第二维度不匹配，会在下面这行代码出现问题
         attn = (q @ k.transpose(-2, -1)) * scale_factor
         attn += attn_bias
         attn = attn.softmax(dim=-1)
@@ -346,6 +348,8 @@ class FaceBlock(nn.Module):
     ) -> torch.Tensor:
         dtype = x.dtype
         B, T, N, C = motion_vec.shape
+        # (1,21,5,5120)
+
         T_comp = T
 
         x_motion = self.pre_norm_motion(motion_vec)
@@ -388,7 +392,7 @@ class FaceBlock(nn.Module):
             max_seqlen_q=q.shape[1],
             batch_size=q.shape[0],
         )
-
+        # ()
         attn = rearrange(attn, "(B L) S C -> B (L S) C", L=T_comp)
         if use_context_parallel:
             q_pad = rearrange(q_pad, "B L H D -> B L (H D)")  

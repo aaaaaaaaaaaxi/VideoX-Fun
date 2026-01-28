@@ -119,7 +119,6 @@ class Wan2_2Transformer3DModel_Animate(WanTransformer3DModel):
         # FLAME参数形状: (B, T, 56) 其中56 = 50 (expression) + 3 (jaw_pose) + 3 (global_pose)
         motion_vec = flame
 
-        print(motion_vec.shape)
 
         # 处理维度适配：FLAME参数 (B, T, 56) 需要适配到 face_encoder 的输入维度
         if motion_vec.shape[-1] == 56:
@@ -127,15 +126,19 @@ class Wan2_2Transformer3DModel_Animate(WanTransformer3DModel):
             motion_vec = self.flame_projection(motion_vec)
 
         print(motion_vec.shape)
-
+        # (1,77,512)
 
         # 送入face_encoder前确保维度正确 (b,t,c=512)
         # motion_vec = rearrange(motion_vec, "b t c -> b t c")
         motion_vec = self.face_encoder(motion_vec)
 
+        print(motion_vec.shape)
+        # (1,20,5,5120)
+
         B, L, H, C = motion_vec.shape
         pad_face = torch.zeros(B, 1, H, C).type_as(motion_vec)
         motion_vec = torch.cat([pad_face, motion_vec], dim=1)
+        # (1,21,5,5120)
         return x, motion_vec
 
     def after_transformer_block(self, block_idx, x, motion_vec, motion_masks=None):
