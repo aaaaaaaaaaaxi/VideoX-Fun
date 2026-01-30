@@ -1,5 +1,6 @@
 import inspect
 import math
+import pickle
 from dataclasses import dataclass
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
@@ -155,6 +156,11 @@ class Wan2_2FunControlPipeline(DiffusionPipeline):
 
     This model inherits from [`DiffusionPipeline`]. Check the superclass documentation for the generic methods the
     library implements for all the pipelines (such as downloading or saving, running on a particular device, etc.)
+    """
+
+    """
+    - transformer: 主要的扩散模型，处理大部分时间步
+    - transformer_2: 在边界时间点后使用（boundary * num_train_timesteps）
     """
 
     _optional_components = ["transformer_2"]
@@ -501,6 +507,88 @@ class Wan2_2FunControlPipeline(DiffusionPipeline):
     def interrupt(self):
         return self._interrupt
 
+    def prepare_flame_latents(
+        self,
+        flame_pkl: Optional[Union[str, List[str], np.ndarray, torch.Tensor]] = None,
+        num_frames: int = 49,
+        batch_size: int = 1,
+        device: Optional[torch.device] = None,
+        dtype: Optional[torch.dtype] = None,
+    ):
+        """
+        Prepare FLAME latents from pkl file or tensor.
+
+        Args:
+            flame_pkl: Path to FLAME pkl file, list of paths, or pre-loaded FLAME data (numpy array or tensor)
+            num_frames: Number of frames to use
+            batch_size: Batch size
+            device: Device to place the tensor on
+            dtype: Data type for the tensor
+
+        Returns:
+            FLAME tensor with shape (batch_size, num_frames, 56)
+        """
+        device = device or self._execution_device
+        dtype = dtype or self.text_encoder.dtype
+
+        if flame_pkl is None:
+            return None
+
+        # Load FLAME from pkl file or use pre-loaded data
+        if isinstance(flame_pkl, str):
+            with open(flame_pkl, "rb") as f:
+                flame_data = pickle.load(f)
+        elif isinstance(flame_pkl, list) and len(flame_pkl) > 0 and isinstance(flame_pkl[0], str):
+            flame_data_list = []
+            for pkl_path in flame_pkl:
+                with open(pkl_path, "rb") as f:
+                    flame_data_list.append(pickle.load(f))
+            flame_data = np.stack(flame_data_list, axis=0)
+        else:
+            flame_data = flame_pkl
+
+        # Convert to numpy array if needed
+        if isinstance(flame_data, list):
+            flame_data = np.array(flame_data)
+        elif torch.is_tensor(flame_data):
+            flame_data = flame_data.cpu().numpy()
+
+        # Ensure numpy array
+        if not isinstance(flame_data, np.ndarray):
+            raise ValueError(f"flame_pkl must be a path to pkl file, list of paths, numpy array, or torch tensor. Got {type(flame_pkl)}")
+
+        # Convert to torch tensor
+        flame_tensor = torch.from_numpy(flame_data).float()
+
+        # Check and reshape to (batch_size, num_frames, 56)
+        # FLAME shape could be (num_frames, 56), (1, num_frames, 56), or (batch_size, num_frames, 56)
+        if flame_tensor.ndim == 2:
+            # Shape: (num_frames, 56)
+            num_frames_available = flame_tensor.shape[0]
+            if num_frames_available < num_frames:
+                raise ValueError(f"FLAME pkl has only {num_frames_available} frames, but {num_frames} frames are required.")
+            flame_tensor = flame_tensor[:num_frames, :].unsqueeze(0)  # (1, num_frames, 56)
+            flame_tensor = flame_tensor.repeat(batch_size, 1, 1)
+        elif flame_tensor.ndim == 3:
+            # Shape: (batch, num_frames, 56) or (1, num_frames, 56)
+            if flame_tensor.shape[0] != batch_size:
+                if flame_tensor.shape[0] == 1:
+                    flame_tensor = flame_tensor.repeat(batch_size, 1, 1)
+                else:
+                    raise ValueError(f"FLAME pkl batch size {flame_tensor.shape[0]} does not match requested batch size {batch_size}.")
+            num_frames_available = flame_tensor.shape[1]
+            if num_frames_available < num_frames:
+                raise ValueError(f"FLAME pkl has only {num_frames_available} frames, but {num_frames} frames are required.")
+            flame_tensor = flame_tensor[:, :num_frames, :]
+        else:
+            raise ValueError(f"FLAME tensor has unsupported shape: {flame_tensor.shape}. Expected (num_frames, 56), (1, num_frames, 56), or (batch_size, num_frames, 56).")
+
+        # Check channel dimension
+        if flame_tensor.shape[-1] != 56:
+            raise ValueError(f"FLAME tensor has channel dimension {flame_tensor.shape[-1]}, expected 56.")
+
+        return flame_tensor.to(device=device, dtype=dtype)
+
     @torch.no_grad()
     @replace_example_docstring(EXAMPLE_DOC_STRING)
     def __call__(
@@ -515,6 +603,7 @@ class Wan2_2FunControlPipeline(DiffusionPipeline):
         control_camera_video: Union[torch.FloatTensor] = None,
         start_image: Union[torch.FloatTensor] = None,
         ref_image: Union[torch.FloatTensor] = None,
+        flame_pkl: Optional[Union[str, List[str], np.ndarray, torch.Tensor]] = None,
         num_frames: int = 49,
         num_inference_steps: int = 50,
         timesteps: Optional[List[int]] = None,
@@ -749,10 +838,10 @@ class Wan2_2FunControlPipeline(DiffusionPipeline):
         if self.transformer.config.get("add_ref_conv", False):
             if ref_image is not None:
                 video_length = ref_image.shape[2]
-                ref_image = self.image_processor.preprocess(rearrange(ref_image, "b c f h w -> (b f) c h w"), height=height, width=width) 
+                ref_image = self.image_processor.preprocess(rearrange(ref_image, "b c f h w -> (b f) c h w"), height=height, width=width)
                 ref_image = ref_image.to(dtype=torch.float32)
                 ref_image = rearrange(ref_image, "(b f) c h w -> b c f h w", f=video_length)
-                
+
                 ref_image_latentes = self.prepare_control_latents(
                     None,
                     ref_image,
@@ -772,6 +861,15 @@ class Wan2_2FunControlPipeline(DiffusionPipeline):
                 raise ValueError("The add_ref_conv is False, but ref_image is not None")
             else:
                 ref_image_latentes = None
+
+        # Prepare FLAME latents
+        flame_latents = self.prepare_flame_latents(
+            flame_pkl=flame_pkl,
+            num_frames=num_frames,
+            batch_size=batch_size,
+            device=device,
+            dtype=weight_dtype,
+        )
 
         if comfyui_progressbar:
             pbar.update(1)
@@ -829,6 +927,19 @@ class Wan2_2FunControlPipeline(DiffusionPipeline):
                 else:
                     full_ref = None
 
+                # Prepare FLAME latents input with classifier-free guidance
+                if flame_latents is not None:
+                    # For classifier-free guidance, we need zeros for the negative prompt
+                    # and the actual FLAME data for the positive prompt
+                    batch_dim = flame_latents.shape[0]
+                    flame_zeros = torch.zeros_like(flame_latents)
+                    if do_classifier_free_guidance:
+                        flame_input = torch.cat([flame_zeros, flame_latents], dim=0).to(device, weight_dtype)
+                    else:
+                        flame_input = flame_latents.to(device, weight_dtype)
+                else:
+                    flame_input = None
+
                 # broadcast to batch dimension in a way that's compatible with ONNX/Core ML
                 if self.vae.spatial_compression_ratio >= 16 and init_video is not None:
                     temp_ts = ((mask[0][0][:, ::2, ::2]) * t).flatten()
@@ -857,8 +968,9 @@ class Wan2_2FunControlPipeline(DiffusionPipeline):
                         t=timestep,
                         seq_len=seq_len,
                         y=control_latents_input,
-                        y_camera=control_camera_latents_input, 
+                        y_camera=control_camera_latents_input,
                         full_ref=full_ref,
+                        flame=flame_input,
                     )
 
                 # perform guidance
