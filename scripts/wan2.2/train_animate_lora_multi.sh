@@ -6,7 +6,7 @@ export DATASET_META_NAME="/hpc2hdd/home/ntang745/workspace/VideoX-Fun/datasets/d
 # export NCCL_P2P_DISABLE=1
 NCCL_DEBUG=INFO
 
-CUDA_VISIBLE_DEVICES=0,1 accelerate launch --multi_gpu --num_processes 2 --gpu_ids 0,1 --main_process_port 29501 --mixed_precision="bf16" scripts/wan2.2/train_animate_lora.py \
+CUDA_VISIBLE_DEVICES=0,1 accelerate launch --multi_gpu --num_processes 2 --main_process_port 29501 --mixed_precision="bf16" scripts/wan2.2/train_animate_lora.py \
   --config_path="config/wan2.2/wan_civitai_animate.yaml" \
   --pretrained_model_name_or_path=$MODEL_NAME \
   --train_data_dir=$DATASET_NAME \
