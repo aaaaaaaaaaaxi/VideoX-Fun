@@ -2009,6 +2009,7 @@ def main():
                         torch.cuda.ipc_collect()
                         if not args.save_state:
                             if args.use_peft_lora:
+                                # 保存 LoRA (PEFT 模式)
                                 safetensor_save_path = os.path.join(args.output_dir, f"checkpoint-{global_step}.safetensors")
                                 network_state_dict = get_peft_model_state_dict(accelerator.unwrap_model(transformer3d))
                                 save_model(safetensor_save_path, network_state_dict)
@@ -2018,17 +2019,23 @@ def main():
                                 save_model(safetensor_kohya_format_save_path, network_state_dict_kohya)
                                 logger.info(f"Saved safetensor to {safetensor_save_path}")
 
-                                # 保存 Transformer
+                                # 保存 Transformer (PEFT 模式下 network=None，直接保存 transformer3d)
                                 from safetensors.torch import save_file
                                 save_path = os.path.join(args.output_dir, f"checkpoint-{global_step}", "transformer.safetensors")
-                                save_file(accelerator.unwrap_model(network).unet.state_dict(), save_path)
+                                save_file(accelerator.unwrap_model(transformer3d).state_dict(), save_path)
                                 logger.info(f"Saved transformer to {save_path}")
-                                                           
+
                             else:
                                 # 保存 LoRA (非 PEFT 模式)
                                 safetensor_save_path = os.path.join(args.output_dir, f"checkpoint-{global_step}.safetensors")
                                 save_model(safetensor_save_path, accelerator.unwrap_model(network))
                                 logger.info(f"Saved safetensor to {safetensor_save_path}")
+
+                                # save transformer
+                                from safetensors.torch import save_file
+                                save_path = os.path.join(os.path.join(args.output_dir, f"checkpoint-{global_step}", "transformer.safetensors"))
+                                save_file(accelerator.unwrap_model(network).unet.state_dict(), save_path)
+                                logger.info(f"Saved transformer to {save_path}")
                                 
                         # 保存accelerator state便于恢复训练
                         accelerator_save_path = os.path.join(args.output_dir, f"checkpoint-{global_step}")
