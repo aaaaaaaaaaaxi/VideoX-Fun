@@ -181,6 +181,7 @@ class LoRANetwork(torch.nn.Module):
         self.lora_dim = lora_dim
         self.alpha = alpha
         self.dropout = dropout
+        self.unet = unet
 
         print(f"create LoRA network. base dim (rank): {lora_dim}, alpha: {alpha}")
         print(f"neuron dropout: p={self.dropout}")
@@ -320,7 +321,7 @@ class LoRANetwork(torch.nn.Module):
         # 给optimizer添加新增层的可训练参数
         track_param = []
         for name, param in self.unet.named_parameters():
-            # 判断是否是新增层的可训练参数，但是除了instance外其他的查找都很多余啊
+            # 判断是否是新增层的可训练参数
             if "patch" in name or "instance" in name or "dino_adapter" in name or "_ins" in name or "alpha_" in name:
                 param.requires_grad_(True)
                 track_param.append(param)
@@ -336,11 +337,11 @@ class LoRANetwork(torch.nn.Module):
         track_param = []
         for name, param in self.unet.named_parameters():
 
-            print(f"all layers name in unet: {name}")
+            # print(f"all layers name in unet: {name}")
 
             # 判断是否是新增层的可训练参数
             # 不选 "patch" 而选 "patch_embedding" 避免选中 "pose_patch_embedding"
-            if "patch_embedding" in name or "flame" in name or "dino_adapter" in name or "_ins" in name or "alpha_" in name:
+            if "patch_embedding" in name or "flame" in name or "face_encoder" in name or "face_adapter" in name :
                 param.requires_grad_(True)
                 track_param.append(param)
             else:

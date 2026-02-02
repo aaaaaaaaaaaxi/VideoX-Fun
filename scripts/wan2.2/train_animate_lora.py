@@ -927,6 +927,7 @@ def main():
             skip_name=args.lora_skip_name,
         )
         network = network.to(weight_dtype)
+        # apply_to 做了什么
         network.apply_to(text_encoder, transformer3d, args.train_text_encoder and not args.training_with_video_token_length, True)
 
     if args.transformer_path is not None:
@@ -1096,11 +1097,13 @@ def main():
 
     if args.use_peft_lora:
         logging.info("Add peft parameters")
+        # 筛选可学参数
         trainable_params = list(filter(lambda p: p.requires_grad, transformer3d.parameters()))
         trainable_params_optim = list(filter(lambda p: p.requires_grad, transformer3d.parameters()))
     else:
         logging.info("Add network parameters")
         trainable_params = list(filter(lambda p: p.requires_grad, network.parameters()))
+        # 输入参数为(text_encoder_lr, unet_lr, default_lr)
         trainable_params_optim = network.prepare_optimizer_params(args.learning_rate / 2, args.learning_rate, args.learning_rate)
 
     if args.use_came:
@@ -2033,7 +2036,7 @@ def main():
 
                                 # save transformer
                                 from safetensors.torch import save_file
-                                save_path = os.path.join(os.path.join(args.output_dir, f"checkpoint-{global_step}", "transformer.safetensors"))
+                                save_path = os.path.join(os.path.join(args.output_dir, f"checkpoint-{global_step}.transformer.safetensors"))
                                 save_file(accelerator.unwrap_model(network).unet.state_dict(), save_path)
                                 logger.info(f"Saved transformer to {save_path}")
                                 
