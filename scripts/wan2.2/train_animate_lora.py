@@ -1027,6 +1027,16 @@ def main():
             # create custom saving & loading hooks so that `accelerator.save_state(...)` serializes in a nice format
             def save_model_hook(models, weights, output_dir):
                 if accelerator.is_main_process:
+
+                    # save transformer
+                    # if args.use_ema:
+                    #     ema_transformer3d.save_pretrained(os.path.join(output_dir, "transformer_ema"))
+
+                    # models[0].save_pretrained(os.path.join(output_dir, "transformer"))
+                    # if not args.use_deepspeed:
+                    #     weights.pop()
+
+                    # save lora
                     safetensor_save_path = os.path.join(output_dir, f"lora_diffusion_pytorch_model.safetensors")
                     if args.use_peft_lora:
                         network_state_dict = get_peft_model_state_dict(accelerator.unwrap_model(models[-1]))
@@ -1559,6 +1569,8 @@ def main():
         accelerator.print(f"\nsaving checkpoint: {ckpt_file}")
         if isinstance(unwrapped_nw, dict):
             from safetensors.torch import save_file
+
+            # .pt 2 .safetensors
             save_file(unwrapped_nw, ckpt_file, metadata={"format": "pt"})
             return ckpt_file
         unwrapped_nw.save_weights(ckpt_file, weight_dtype, None)

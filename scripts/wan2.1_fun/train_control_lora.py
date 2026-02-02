@@ -2009,6 +2009,7 @@ def main():
                 )
 
     # Create the pipeline using the trained modules and save it.
+    # 训练结束后最后一次保存
     accelerator.wait_for_everyone()
     if args.use_deepspeed or args.use_fsdp or accelerator.is_main_process:
         gc.collect()
