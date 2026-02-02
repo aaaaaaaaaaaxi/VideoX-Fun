@@ -1106,6 +1106,11 @@ def main():
         # 输入参数为(text_encoder_lr, unet_lr, default_lr)
         trainable_params_optim = network.prepare_optimizer_params(args.learning_rate / 2, args.learning_rate, args.learning_rate)
 
+
+    for name, para in network.named_parameters():
+        if "lora" not in name and para.requires_grad:
+            accelerator.print(f"可训练参数: {name}")
+
     if args.use_came:
         optimizer = optimizer_cls(
             trainable_params_optim,

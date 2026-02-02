@@ -380,9 +380,9 @@ class FaceBlock(nn.Module):
         q = rearrange(q, "B (L S) H D -> (B L) S H D", L=T_comp)  
         q, k, v = q.to(dtype), k.to(dtype), v.to(dtype)
 
-        print(f"Q shape: {q.shape}")
-        print(f"K shape: {k.shape}")
-        print(f"V shape: {v.shape}")
+        # print(f"Q shape: {q.shape}")
+        # print(f"K shape: {k.shape}")
+        # print(f"V shape: {v.shape}")
 
         # Compute attention.
         attn = attention(
