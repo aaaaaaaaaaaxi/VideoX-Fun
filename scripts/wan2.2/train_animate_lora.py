@@ -1027,16 +1027,6 @@ def main():
             # create custom saving & loading hooks so that `accelerator.save_state(...)` serializes in a nice format
             def save_model_hook(models, weights, output_dir):
                 if accelerator.is_main_process:
-
-                    # save transformer
-                    # if args.use_ema:
-                    #     ema_transformer3d.save_pretrained(os.path.join(output_dir, "transformer_ema"))
-
-                    # models[0].save_pretrained(os.path.join(output_dir, "transformer"))
-                    # if not args.use_deepspeed:
-                    #     weights.pop()
-
-                    # save lora
                     safetensor_save_path = os.path.join(output_dir, f"lora_diffusion_pytorch_model.safetensors")
                     if args.use_peft_lora:
                         network_state_dict = get_peft_model_state_dict(accelerator.unwrap_model(models[-1]))
@@ -2027,14 +2017,23 @@ def main():
                                 network_state_dict_kohya = convert_peft_lora_to_kohya_lora(network_state_dict)
                                 save_model(safetensor_kohya_format_save_path, network_state_dict_kohya)
                                 logger.info(f"Saved safetensor to {safetensor_save_path}")
+
+                                # 保存 Transformer
+                                from safetensors.torch import save_file
+                                save_path = os.path.join(args.output_dir, f"checkpoint-{global_step}", "transformer.safetensors")
+                                save_file(accelerator.unwrap_model(network).unet.state_dict(), save_path)
+                                logger.info(f"Saved transformer to {save_path}")
+                                                           
                             else:
+                                # 保存 LoRA (非 PEFT 模式)
                                 safetensor_save_path = os.path.join(args.output_dir, f"checkpoint-{global_step}.safetensors")
                                 save_model(safetensor_save_path, accelerator.unwrap_model(network))
                                 logger.info(f"Saved safetensor to {safetensor_save_path}")
-                        else:
-                            accelerator_save_path = os.path.join(args.output_dir, f"checkpoint-{global_step}")
-                            accelerator.save_state(accelerator_save_path)
-                            logger.info(f"Saved state to {accelerator_save_path}")
+                                
+                        # 保存accelerator state便于恢复训练
+                        accelerator_save_path = os.path.join(args.output_dir, f"checkpoint-{global_step}")
+                        accelerator.save_state(accelerator_save_path)
+                        logger.info(f"Saved state to {accelerator_save_path}")
 
                 if accelerator.is_main_process:
                     if args.validation_prompts is not None and global_step % args.validation_steps == 0:
