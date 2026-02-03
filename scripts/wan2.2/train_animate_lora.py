@@ -1573,6 +1573,17 @@ def main():
             return ckpt_file
         unwrapped_nw.save_weights(ckpt_file, weight_dtype, None)
 
+    def save_lora_model(ckpt_file, unwrapped_nw):
+        os.makedirs(args.output_dir, exist_ok=True)
+        accelerator.print(f"\nsaving checkpoint: {ckpt_file}")
+        if isinstance(unwrapped_nw, dict):
+            from safetensors.torch import save_file
+
+            # .pt 2 .safetensors
+            save_file(unwrapped_nw, ckpt_file, metadata={"format": "pt"})
+            return ckpt_file
+        unwrapped_nw.save_lora_weights(ckpt_file, weight_dtype, None)
+
     progress_bar = tqdm(
         range(0, args.max_train_steps),
         initial=initial_global_step,
@@ -2016,6 +2027,7 @@ def main():
                         torch.cuda.empty_cache()
                         torch.cuda.ipc_collect()
                         if not args.save_state:
+                            os.makedirs(os.path.join(args.output_dir, f"checkpoint-{global_step}"), exist_ok=True)
                             if args.use_peft_lora:
                                 # 保存 LoRA (PEFT 模式)
                                 safetensor_save_path = os.path.join(args.output_dir, f"checkpoint-{global_step}.safetensors")
@@ -2027,7 +2039,7 @@ def main():
                                 save_model(safetensor_kohya_format_save_path, network_state_dict_kohya)
                                 logger.info(f"Saved safetensor to {safetensor_save_path}")
 
-                                # 保存 Transformer (PEFT 模式下 network=None，直接保存 transformer3d)
+                                # TODO: 保存 Transformer (PEFT 模式下 network=None，直接保存 transformer3d)
                                 from safetensors.torch import save_file
                                 save_path = os.path.join(args.output_dir, f"checkpoint-{global_step}", "transformer.safetensors")
                                 save_file(accelerator.unwrap_model(transformer3d).state_dict(), save_path)
@@ -2035,13 +2047,13 @@ def main():
 
                             else:
                                 # 保存 LoRA (非 PEFT 模式)
-                                safetensor_save_path = os.path.join(args.output_dir, f"checkpoint-{global_step}.safetensors")
-                                save_model(safetensor_save_path, accelerator.unwrap_model(network))
+                                safetensor_save_path = os.path.join(args.output_dir, f"checkpoint-{global_step}-lora.safetensors")
+                                save_lora_model(safetensor_save_path, accelerator.unwrap_model(network))
                                 logger.info(f"Saved safetensor to {safetensor_save_path}")
 
                                 # save transformer
                                 from safetensors.torch import save_file
-                                save_path = os.path.join(os.path.join(args.output_dir, f"checkpoint-{global_step}.transformer.safetensors"))
+                                save_path = os.path.join(os.path.join(args.output_dir, f"checkpoint-{global_step}-transformer.safetensors"))
                                 save_file(accelerator.unwrap_model(network).unet.state_dict(), save_path)
                                 logger.info(f"Saved transformer to {save_path}")
                                 
