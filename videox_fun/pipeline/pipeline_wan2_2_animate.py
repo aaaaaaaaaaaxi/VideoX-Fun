@@ -664,27 +664,41 @@ class Wan2_2AnimatePipeline(DiffusionPipeline):
             pbar = ProgressBar(num_inference_steps + 1)
 
         # 4. Prepare latents
+        # Process pose_video: handle None case
         if pose_video is not None:
             video_length = pose_video.shape[2]
-            pose_video = self.image_processor.preprocess(rearrange(pose_video, "b c f h w -> (b f) c h w"), height=height, width=width) 
+            pose_video = self.image_processor.preprocess(rearrange(pose_video, "b c f h w -> (b f) c h w"), height=height, width=width)
             pose_video = pose_video.to(dtype=torch.float32)
             pose_video = rearrange(pose_video, "(b f) c h w -> b c f h w", f=video_length)
+            real_frame_len = pose_video.shape[2]
         else:
-            pose_video = None
+            # If pose_video is None, use num_frames as default
+            real_frame_len = num_frames
 
+        # Process face_video: handle None case
         if face_video is not None:
             video_length = face_video.shape[2]
-            face_video = self.image_processor.preprocess(rearrange(face_video, "b c f h w -> (b f) c h w")) 
+            face_video = self.image_processor.preprocess(rearrange(face_video, "b c f h w -> (b f) c h w"))
             face_video = face_video.to(dtype=torch.float32)
             face_video = rearrange(face_video, "(b f) c h w -> b c f h w", f=video_length)
-        else:
-            face_video = None
 
-        real_frame_len = pose_video.size()[2]
         target_len = self.get_valid_len(real_frame_len, clip_len, overlap=refert_num)
         print('real frames: {} target frames: {}'.format(real_frame_len, target_len))
-        pose_video = self.inputs_padding(pose_video, target_len).to(device, weight_dtype) 
-        face_video = self.inputs_padding(face_video, target_len).to(device, weight_dtype) 
+
+        # Apply padding to pose_video
+        if pose_video is not None:
+            pose_video = self.inputs_padding(pose_video, target_len).to(device, weight_dtype)
+        else:
+            # Create zero tensor for pose_video if None
+            pose_video = torch.zeros(1, 3, target_len, height, width, device=device, dtype=weight_dtype)
+
+        # Apply padding to face_video
+        if face_video is not None:
+            face_video = self.inputs_padding(face_video, target_len).to(device, weight_dtype)
+        else:
+            # Create tensor filled with -1 for face_video if None (special value indicating no face)
+            face_video = torch.ones(1, 3, target_len, 512, 512, device=device, dtype=weight_dtype) * -1
+
         ref_image = self.padding_resize(np.array(ref_image), height=height, width=width)
         ref_image = torch.tensor(ref_image / 127.5 - 1).unsqueeze(0).permute([3, 0, 1, 2]).unsqueeze(0).to(device, weight_dtype) 
 
