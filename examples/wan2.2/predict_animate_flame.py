@@ -92,7 +92,7 @@ shift               = 5
 # Load pretrained model if need
 # 可选，用于加载额外的 checkpoint 权重来覆盖/更新基础模型
 # The transformer_path is used for low noise model, the transformer_high_path is used for high noise model.
-transformer_path        = None
+transformer_path        = "output_dir/checkpoint-10-transformer.safetensors"
 transformer_high_path   = None
 vae_path                = None
 # Load lora model if need
@@ -100,13 +100,17 @@ vae_path                = None
 lora_path               = "output_dir/checkpoint-10-lora.safetensors"
 lora_high_path          = None
 
-src_root_path           = "asset/wan_animate/test_process_results"
+# src_root_path           = "asset/wan_animate/test_process_results"
+# src_pose_path           = os.path.join(src_root_path, "src_pose.mp4")
+# src_face_path           = os.path.join(src_root_path, "src_face.mp4")
+# src_ref_path            = os.path.join(src_root_path, "src_ref.png")
+# src_bg_path             = os.path.join(src_root_path, "src_bg.mp4")
+# src_mask_path           = os.path.join(src_root_path, "src_mask.mp4")
+# src_flame_path          = os.path.join(src_root_path, "src_flame.pkl")
+
+
 src_pose_path           = os.path.join(src_root_path, "src_pose.mp4")
 src_face_path           = os.path.join(src_root_path, "src_face.mp4")
-src_ref_path            = os.path.join(src_root_path, "src_ref.png")
-src_bg_path             = os.path.join(src_root_path, "src_bg.mp4")
-src_mask_path           = os.path.join(src_root_path, "src_mask.mp4")
-src_flame_path          = os.path.join(src_root_path, "src_flame.pkl")
 
 
 # Other params
@@ -132,12 +136,12 @@ config = OmegaConf.load(config_path)
 boundary = config['transformer_additional_kwargs'].get('boundary', 0.875)
 
 # 第一次加载transformer基础模型
-transformer = Wan2_2Transformer3DModel_Animate.from_pretrained(
-    os.path.join(model_name, config['transformer_additional_kwargs'].get('transformer_low_noise_model_subpath', 'transformer')),
-    transformer_additional_kwargs=OmegaConf.to_container(config['transformer_additional_kwargs']),
-    low_cpu_mem_usage=True,
-    torch_dtype=weight_dtype,
-)
+# transformer = Wan2_2Transformer3DModel_Animate.from_pretrained(
+#     os.path.join(model_name, config['transformer_additional_kwargs'].get('transformer_low_noise_model_subpath', 'transformer')),
+#     transformer_additional_kwargs=OmegaConf.to_container(config['transformer_additional_kwargs']),
+#     low_cpu_mem_usage=True,
+#     torch_dtype=weight_dtype,
+# )
 
 # 加载 MoE
 if config['transformer_additional_kwargs'].get('transformer_combination_type', 'single') == "moe":
@@ -162,7 +166,11 @@ if transformer_path is not None:
 
     # 第二次加载，可以用新训的模型覆盖基础模型
     m, u = transformer.load_state_dict(state_dict, strict=False)
-    print(f"missing keys: {len(m)}, unexpected keys: {len(u)}")
+    print(
+        f"[Load Transformer Weights - New Params] "
+        f"missing keys: {len(m)}, unexpected keys: {len(u)} "
+        f"(this is expected when loading updated transformer weights)"
+    )
 
 if transformer_2 is not None:
     if transformer_high_path is not None:
