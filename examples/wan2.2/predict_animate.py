@@ -133,8 +133,10 @@ transformer = Wan2_2Transformer3DModel_Animate.from_pretrained(
     low_cpu_mem_usage=True,
     torch_dtype=weight_dtype,
 )
+
+# 加载 MoE
 if config['transformer_additional_kwargs'].get('transformer_combination_type', 'single') == "moe":
-    transformer_2 = Wan2_2Transformer3DModel.from_pretrained(
+    transformer_2 = Wan2_2Transformer3DModel.from_pretrained( 
         os.path.join(model_name, config['transformer_additional_kwargs'].get('transformer_high_noise_model_subpath', 'transformer')),
         transformer_additional_kwargs=OmegaConf.to_container(config['transformer_additional_kwargs']),
         low_cpu_mem_usage=True,
@@ -256,6 +258,8 @@ if compile_dit:
             pipeline.transformer_2.blocks[i] = torch.compile(pipeline.transformer_2.blocks[i])
     print("Add Compile")
 
+# 内存优化
+# 顺序 CPU 卸载
 if GPU_memory_mode == "sequential_cpu_offload":
     replace_parameters_by_name(transformer, ["modulation",], device=device)
     transformer.freqs = transformer.freqs.to(device=device)
@@ -319,6 +323,7 @@ with torch.no_grad():
     
     ref_image = get_image(src_ref_path)
 
+    # 如果存在背景图片，则启动背景替换功能
     if os.path.exists(src_bg_path):
         bg_video, _, _, _ = get_video_to_video_latent(src_bg_path, video_length=video_length, sample_size=sample_size, fps=fps, ref_image=None)
         mask_video, _, _, _ = get_video_to_video_latent(src_mask_path, video_length=video_length, sample_size=sample_size, fps=fps, ref_image=None)

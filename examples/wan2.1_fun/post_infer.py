@@ -6,6 +6,28 @@ from datetime import datetime
 import requests
 import base64
 
+'''
+  post_infer = POST + Infer (推理)
+
+  这个函数名反映了它的两个核心特征：
+
+  ┌─────────────────────────────────────────────────────────────┐
+  │  POST  →  HTTP POST 方法 (发送数据到服务器)                  │
+  │  INFER →  Inference (推理/生成)                             │
+  └─────────────────────────────────────────────────────────────┘
+
+  ---
+  核心功能
+
+  这是一个远程推理客户端，通过 HTTP POST 请求调用运行在服务器上的 VideoX-Fun Web UI 服务：
+
+  # 第69行：核心操作
+  post_r = session.post(f'{url}/videox_fun/infer_forward', data=datas, timeout=timeout)
+
+  ---
+
+'''
+
 
 def post_diffusion_transformer(diffusion_transformer_path, url='http://127.0.0.1:7860'):
     datas = json.dumps({
