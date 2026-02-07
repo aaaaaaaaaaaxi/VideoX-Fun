@@ -387,6 +387,37 @@ class LoRANetwork(torch.nn.Module):
         else:
             torch.save(state_dict, file)
 
+    # NEW function, only save lora
+    def save_lora_weights(self, file, dtype, metadata):
+        if metadata is not None and len(metadata) == 0:
+            metadata = None
+
+        state_dict = self.state_dict()
+        lora_state_dict = {}
+        
+        if dtype is not None:
+            for key in list(state_dict.keys()):
+                # 只关注lora！
+                if "lora" in key:
+                    v = state_dict[key]
+                    v = v.detach().clone().to("cpu").to(dtype)
+                    lora_state_dict[key] = v
+
+        if os.path.splitext(file)[1] == ".safetensors":
+            from safetensors.torch import save_file
+
+            # Precalculate model hashes to save time on indexing
+            if metadata is None:
+                metadata = {}
+            model_hash, legacy_hash = precalculate_safetensors_hashes(lora_state_dict, metadata)
+            metadata["sshs_model_hash"] = model_hash
+            metadata["sshs_legacy_hash"] = legacy_hash
+
+            save_file(lora_state_dict, file, metadata)
+        else:
+            torch.save(lora_state_dict, file)
+
+
 def create_network(
     multiplier: float,
     network_dim: Optional[int],
