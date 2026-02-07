@@ -89,8 +89,9 @@ sampler_name        = "Flow_Unipc"
 shift               = 5
 
 # Load pretrained model if need
+# 可选，用于加载额外的 checkpoint 权重来覆盖/更新基础模型
 # The transformer_path is used for low noise model, the transformer_high_path is used for high noise model.
-transformer_path        = None
+transformer_path        = "output_dir/checkpoint-10-transformer.safetensors"
 transformer_high_path   = None
 vae_path                = None
 # Load lora model if need
@@ -98,7 +99,7 @@ vae_path                = None
 lora_path               = None
 lora_high_path          = None
 
-src_root_path           = "asset/wan_animate/test_process_results"
+src_root_path           = "asset/wan_animate/replace/process_results/"
 src_pose_path           = os.path.join(src_root_path, "src_pose.mp4")
 src_face_path           = os.path.join(src_root_path, "src_face.mp4")
 src_ref_path            = os.path.join(src_root_path, "src_ref.png")
@@ -127,6 +128,8 @@ device = set_multi_gpus_devices(ulysses_degree, ring_degree)
 config = OmegaConf.load(config_path)
 boundary = config['transformer_additional_kwargs'].get('boundary', 0.875)
 
+
+# 第一次加载transformer基础模型
 transformer = Wan2_2Transformer3DModel_Animate.from_pretrained(
     os.path.join(model_name, config['transformer_additional_kwargs'].get('transformer_low_noise_model_subpath', 'transformer')),
     transformer_additional_kwargs=OmegaConf.to_container(config['transformer_additional_kwargs']),
@@ -154,6 +157,7 @@ if transformer_path is not None:
         state_dict = torch.load(transformer_path, map_location="cpu")
     state_dict = state_dict["state_dict"] if "state_dict" in state_dict else state_dict
 
+    # 第二次加载，可以用新训的模型覆盖基础模型
     m, u = transformer.load_state_dict(state_dict, strict=False)
     print(f"missing keys: {len(m)}, unexpected keys: {len(u)}")
 
@@ -323,7 +327,7 @@ with torch.no_grad():
     
     ref_image = get_image(src_ref_path)
 
-    # 如果存在背景图片，则启动背景替换功能
+    # 如果没有背景，则背景视频和mask均设为None
     if os.path.exists(src_bg_path):
         bg_video, _, _, _ = get_video_to_video_latent(src_bg_path, video_length=video_length, sample_size=sample_size, fps=fps, ref_image=None)
         mask_video, _, _, _ = get_video_to_video_latent(src_mask_path, video_length=video_length, sample_size=sample_size, fps=fps, ref_image=None)

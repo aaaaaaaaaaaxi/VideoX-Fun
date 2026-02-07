@@ -1,5 +1,6 @@
 import os
 import sys
+import pickle
 
 import numpy as np
 import torch
@@ -89,13 +90,14 @@ sampler_name        = "Flow_Unipc"
 shift               = 5
 
 # Load pretrained model if need
+# 可选，用于加载额外的 checkpoint 权重来覆盖/更新基础模型
 # The transformer_path is used for low noise model, the transformer_high_path is used for high noise model.
 transformer_path        = None
 transformer_high_path   = None
 vae_path                = None
 # Load lora model if need
 # The lora_path is used for low noise model, the lora_high_path is used for high noise model.
-lora_path               = None
+lora_path               = "output_dir/checkpoint-10-lora.safetensors"
 lora_high_path          = None
 
 src_root_path           = "asset/wan_animate/test_process_results"
@@ -104,6 +106,8 @@ src_face_path           = os.path.join(src_root_path, "src_face.mp4")
 src_ref_path            = os.path.join(src_root_path, "src_ref.png")
 src_bg_path             = os.path.join(src_root_path, "src_bg.mp4")
 src_mask_path           = os.path.join(src_root_path, "src_mask.mp4")
+src_flame_path          = os.path.join(src_root_path, "src_flame.pkl")
+
 
 # Other params
 sample_size         = [480, 832]
@@ -127,6 +131,7 @@ device = set_multi_gpus_devices(ulysses_degree, ring_degree)
 config = OmegaConf.load(config_path)
 boundary = config['transformer_additional_kwargs'].get('boundary', 0.875)
 
+# 第一次加载transformer基础模型
 transformer = Wan2_2Transformer3DModel_Animate.from_pretrained(
     os.path.join(model_name, config['transformer_additional_kwargs'].get('transformer_low_noise_model_subpath', 'transformer')),
     transformer_additional_kwargs=OmegaConf.to_container(config['transformer_additional_kwargs']),
@@ -145,6 +150,7 @@ if config['transformer_additional_kwargs'].get('transformer_combination_type', '
 else:
     transformer_2 = None
 
+
 if transformer_path is not None:
     print(f"From checkpoint: {transformer_path}")
     if transformer_path.endswith("safetensors"):
@@ -154,6 +160,7 @@ if transformer_path is not None:
         state_dict = torch.load(transformer_path, map_location="cpu")
     state_dict = state_dict["state_dict"] if "state_dict" in state_dict else state_dict
 
+    # 第二次加载，可以用新训的模型覆盖基础模型
     m, u = transformer.load_state_dict(state_dict, strict=False)
     print(f"missing keys: {len(m)}, unexpected keys: {len(u)}")
 
@@ -308,6 +315,71 @@ if lora_path is not None:
     if transformer_2 is not None:
         pipeline = merge_lora(pipeline, lora_high_path, lora_high_weight, device=device, dtype=weight_dtype, sub_transformer_name="transformer_2")
 
+def load_flame_data(flame_path, num_frames, device, dtype):
+    """
+    Load FLAME parameters from pickle file.
+
+    Args:
+        flame_path: Path to the pickle file containing FLAME data
+        num_frames: Number of frames to use
+        device: Target device
+        dtype: Target data type
+
+    Returns:
+        flame_tensor: Tensor of shape (B, T, 56) where T is num_frames
+                      Contains concatenated expression (50), jaw_pose (3), and global_pose (3)
+    """
+    if flame_path is None or not os.path.exists(flame_path):
+        print(f"FLAME file not found: {flame_path}")
+        return None
+
+    try:
+        with open(flame_path, 'rb') as f:
+            flame_data = pickle.load(f)
+    except Exception as e:
+        print(f"Failed to load FLAME data from {flame_path}: {e}")
+        return None
+
+    # Extract required FLAME parameters
+    expression = flame_data.get('expression', None)
+    global_pose = flame_data.get('global_pose', None)
+    jaw_pose = flame_data.get('jaw_pose', None)
+
+    if expression is None or global_pose is None or jaw_pose is None:
+        print(f"Missing FLAME parameters in {flame_path}. Required: expression, global_pose, jaw_pose")
+        return None
+
+    # Ensure all parameters are 2D and truncate to num_frames
+    def ensure_2d_and_truncate(param, name, expected_dim):
+        if param.ndim == 3:
+            if param.shape[1] == expected_dim:
+                param = param.reshape(-1, expected_dim)
+            else:
+                raise ValueError(f"Unexpected {name} shape: {param.shape}")
+        elif param.ndim != 2:
+            raise ValueError(f"{name} should be 2D, got {param.ndim}D")
+        return param[:num_frames]
+
+    expression = ensure_2d_and_truncate(expression, "expression", 50)
+    global_pose = ensure_2d_and_truncate(global_pose, "global_pose", 3)
+    jaw_pose = ensure_2d_and_truncate(jaw_pose, "jaw_pose", 3)
+
+    # Concatenate into (T, 56) format
+    if isinstance(expression, torch.Tensor):
+        flame = torch.cat([expression, jaw_pose, global_pose], dim=-1)
+    else:
+        flame = np.concatenate([expression, jaw_pose, global_pose], axis=-1).astype(np.float32)
+
+    # Convert to tensor and add batch dimension
+    if isinstance(flame, np.ndarray):
+        flame = torch.from_numpy(flame)
+
+    flame = flame.unsqueeze(0).to(device=device, dtype=dtype)  # (1, T, 56)
+
+    print(f"Loaded FLAME parameters with shape: {flame.shape}")
+    return flame
+
+
 with torch.no_grad():
     video_length = int((video_length - 1) // vae.config.temporal_compression_ratio * vae.config.temporal_compression_ratio) + 1 if video_length != 1 else 1
     latent_frames = (video_length - 1) // vae.config.temporal_compression_ratio + 1
@@ -334,8 +406,14 @@ with torch.no_grad():
         mask_video = None
         replace_flag = False
 
+    # Load FLAME parameters if enabled and file exists
+    flame_params = None
+    if os.path.exists(src_flame_path):
+        flame_params = load_flame_data(src_flame_path, video_length, device, weight_dtype)
+        print(f"FLAME params shape: {flame_params.shape if flame_params is not None else 'None'}")
+
     sample = pipeline(
-        prompt, 
+        prompt,
         num_frames = video_length,
         negative_prompt = negative_prompt,
         height      = sample_size[0],
@@ -350,6 +428,7 @@ with torch.no_grad():
         bg_video        = bg_video,
         mask_video      = mask_video,
         replace_flag    = replace_flag,
+        flame           = flame_params,  # Add FLAME parameters
         shift           = shift,
     ).videos
 

@@ -577,6 +577,7 @@ class Wan2_2AnimatePipeline(DiffusionPipeline):
         bg_video = None,
         mask_video = None,
         replace_flag = True,
+        flame = None,  # FLAME parameters: (B, T, 56) tensor or None
         timesteps: Optional[List[int]] = None,
         guidance_scale: float = 6,
         num_videos_per_prompt: int = 1,
@@ -714,6 +715,25 @@ class Wan2_2AnimatePipeline(DiffusionPipeline):
         copy_timesteps  = copy.deepcopy(timesteps)
         copy_latents    = copy.deepcopy(latents)
         bs              = pose_video.size()[0]
+
+        # Prepare FLAME parameters for each clip
+        flame_clips = []
+        if flame is not None:
+            # flame shape: (B, T, 56), we need to split it into clips
+            total_frames = flame.shape[1]
+            clip_start = 0
+            while clip_start < total_frames:
+                clip_end = min(clip_start + clip_len, total_frames)
+                flame_clips.append(flame[:, clip_start:clip_end, :])
+                if clip_end >= total_frames:
+                    break
+                clip_start = clip_end - refert_num
+        else:
+            # If no FLAME data, create dummy None for each clip
+            num_clips = (pose_video.size()[2] - refert_num - 1) // (clip_len - refert_num) + 1
+            flame_clips = [None] * num_clips
+
+        clip_idx = 0
         while True:
             if start + refert_num >= pose_video.size()[2]:
                 break
@@ -863,6 +883,24 @@ class Wan2_2AnimatePipeline(DiffusionPipeline):
                         torch.cat([torch.ones_like(face_pixel_values) * -1] + [face_pixel_values]) if do_classifier_free_guidance else face_pixel_values
                     )
 
+                    # Prepare FLAME parameters for this clip
+                    flame_input = flame_clips[clip_idx] if clip_idx < len(flame_clips) else None
+                    if flame_input is not None:
+                        # Ensure FLAME has the correct temporal dimension for this clip
+                        current_clip_frames = end - start
+                        if flame_input.shape[1] < current_clip_frames:
+                            # Pad if needed
+                            pad_frames = current_clip_frames - flame_input.shape[1]
+                            flame_input = torch.cat([flame_input, flame_input[:, -1:, :].expand(-1, pad_frames, -1)], dim=1)
+                        elif flame_input.shape[1] > current_clip_frames:
+                            # Truncate if needed
+                            flame_input = flame_input[:, :current_clip_frames, :]
+                        # For CFG, duplicate the FLAME parameters
+                        if do_classifier_free_guidance:
+                            # For negative prompt, use zeros; for positive, use actual FLAME
+                            flame_neg = torch.zeros_like(flame_input)
+                            flame_input = torch.cat([flame_neg, flame_input], dim=0)
+
                     # broadcast to batch dimension in a way that's compatible with ONNX/Core ML
                     timestep = t.expand(latent_model_input.shape[0])
                     
@@ -885,6 +923,7 @@ class Wan2_2AnimatePipeline(DiffusionPipeline):
                             clip_fea=clip_context_input,
                             pose_latents=pose_latents_input,
                             face_pixel_values=face_pixel_values_input,
+                            flame=flame_input,  # Add FLAME parameters
                         )
 
                     # Perform guidance
@@ -920,6 +959,7 @@ class Wan2_2AnimatePipeline(DiffusionPipeline):
             all_out_frames.append(out_frames.cpu())
             start += clip_len - refert_num
             end += clip_len - refert_num
+            clip_idx += 1  # Increment clip index for FLAME parameters
 
         videos = torch.cat(all_out_frames, dim=2)[:, :, :real_frame_len]
 
