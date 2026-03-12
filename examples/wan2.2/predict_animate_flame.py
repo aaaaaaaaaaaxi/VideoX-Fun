@@ -92,36 +92,34 @@ shift               = 5
 # Load pretrained model if need
 # 可选，用于加载额外的 checkpoint 权重来覆盖/更新基础模型
 # The transformer_path is used for low noise model, the transformer_high_path is used for high noise model.
-transformer_path        = "output_dir/checkpoint-10-transformer.safetensors"
+transformer_path        = "output_dir/checkpoint-2000-transformer.safetensors"
 transformer_high_path   = None
 vae_path                = None
 # Load lora model if need
 # The lora_path is used for low noise model, the lora_high_path is used for high noise model.
-lora_path               = "output_dir/checkpoint-10-lora.safetensors"
+lora_path               = "output_dir/checkpoint-2000-lora.safetensors"
 lora_high_path          = None
 
-# src_root_path           = "asset/wan_animate/test_process_results"
-# src_pose_path           = os.path.join(src_root_path, "src_pose.mp4")
-# src_face_path           = os.path.join(src_root_path, "src_face.mp4")
-# src_ref_path            = os.path.join(src_root_path, "src_ref.png")
-# src_bg_path             = os.path.join(src_root_path, "src_bg.mp4")
-# src_mask_path           = os.path.join(src_root_path, "src_mask.mp4")
-# src_flame_path          = os.path.join(src_root_path, "src_flame.pkl")
-
-
+# 下面的文件都用不上
+src_root_path           = "asset/wan_animate/test_MEAD"
 src_pose_path           = os.path.join(src_root_path, "src_pose.mp4")
 src_face_path           = os.path.join(src_root_path, "src_face.mp4")
+src_bg_path             = os.path.join(src_root_path, "src_bg.mp4")
+src_mask_path           = os.path.join(src_root_path, "src_mask.mp4")
+
+src_ref_path            = "/hpc2hdd/home/ntang745/workspace/VideoX-Fun/asset/wan_animate/test_cele/vYnrubV0UqE_2.png"
+src_flame_path          = "/hpc2hdd/home/ntang745/workspace/VideoX-Fun/asset/wan_animate/test_cele/vYnrubV0UqE_2.pkl"
 
 
 # Other params
-sample_size         = [480, 832]
+sample_size         = [512, 512]
 video_length        = 81
-fps                 = 16
+fps                 = 25
 
 # Use torch.float16 if GPU does not support torch.bfloat16
 # ome graphics cards, such as v100, 2080ti, do not support torch.bfloat16
 weight_dtype        = torch.bfloat16
-prompt              = "视频中的人在做动作"
+prompt              = "视频中的人在讲话"
 negative_prompt     = "色调艳丽，过曝，静态，细节模糊不清，字幕，风格，作品，画作，画面，静止，整体发灰，最差质量，低质量，JPEG压缩残留，丑陋的，残缺的，多余的手指，画得不好的手部，画得不好的脸部，畸形的，毁容的，形态畸形的肢体，手指融合，静止不动的画面，杂乱的背景，三条腿，背景人很多，倒着走"
 guidance_scale      = 4.0
 seed                = 43
@@ -135,13 +133,13 @@ device = set_multi_gpus_devices(ulysses_degree, ring_degree)
 config = OmegaConf.load(config_path)
 boundary = config['transformer_additional_kwargs'].get('boundary', 0.875)
 
-# 第一次加载transformer基础模型
-# transformer = Wan2_2Transformer3DModel_Animate.from_pretrained(
-#     os.path.join(model_name, config['transformer_additional_kwargs'].get('transformer_low_noise_model_subpath', 'transformer')),
-#     transformer_additional_kwargs=OmegaConf.to_container(config['transformer_additional_kwargs']),
-#     low_cpu_mem_usage=True,
-#     torch_dtype=weight_dtype,
-# )
+# 第一次定义并加载transformer基础模型
+transformer = Wan2_2Transformer3DModel_Animate.from_pretrained(
+    os.path.join(model_name, config['transformer_additional_kwargs'].get('transformer_low_noise_model_subpath', 'transformer')),
+    transformer_additional_kwargs=OmegaConf.to_container(config['transformer_additional_kwargs']),
+    low_cpu_mem_usage=True,
+    torch_dtype=weight_dtype,
+)
 
 # 加载 MoE
 if config['transformer_additional_kwargs'].get('transformer_combination_type', 'single') == "moe":
@@ -397,10 +395,17 @@ with torch.no_grad():
         if transformer_2 is not None:
             pipeline.transformer_2.enable_riflex(k = riflex_k, L_test = latent_frames)
 
-    pose_video, _, _, _ = get_video_to_video_latent(src_pose_path, video_length=video_length, sample_size=sample_size, fps=fps, ref_image=None)
 
-    face_video, _, _, _ = get_video_to_video_latent(src_face_path, video_length=video_length, sample_size=[512, 512], fps=fps, ref_image=None)
-    
+    if os.path.exists(src_pose_path):
+        pose_video, _, _, _ = get_video_to_video_latent(src_pose_path, video_length=video_length, sample_size=sample_size, fps=fps, ref_image=None)
+    else:
+        pose_video = None
+
+    if os.path.exists(src_face_path):
+        face_video, _, _, _ = get_video_to_video_latent(src_face_path, video_length=video_length, sample_size=[512, 512], fps=fps, ref_image=None)
+    else:
+        face_video = None
+
     ref_image = get_image(src_ref_path)
 
     # 如果存在背景图片，则启动背景替换功能

@@ -1,0 +1,1 @@
+nohup python '/hpc2hdd/home/ntang745/workspace/VideoX-Fun/examples/wan2.2/predict_s2v.py' > log/predict_s2v_output.log 2>&1 &

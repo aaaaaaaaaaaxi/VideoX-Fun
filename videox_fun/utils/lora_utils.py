@@ -340,7 +340,8 @@ class LoRANetwork(torch.nn.Module):
             # print(f"all layers name in unet: {name}")
 
             # 判断是否是新增层的可训练参数
-            if "patch_embedding" in name or "flame" in name or "face_encoder" in name or "face_adapter" in name :
+            # if "patch_embedding" in name or "flame" in name or "face_encoder" in name or "face_adapter" in name :
+            if "flame" in name:
                 param.requires_grad_(True)
                 track_param.append(param)
             else:
