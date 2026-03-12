@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import argparse
 from tqdm import tqdm
 from contextlib import contextmanager
 
@@ -88,22 +89,33 @@ weight_dtype            = torch.bfloat16
 control_video           = None
 
 # ============================================
+# Parse command line arguments
+# ============================================
+parser = argparse.ArgumentParser(description='Batch generate videos with S2V model')
+parser.add_argument('--block', type=str, default='01', help='Block number (01-30)')
+parser.add_argument('--ref_image_folder', type=str, default='path/to/ref/images', help='Folder containing reference images')
+parser.add_argument('--audio_folder', type=str, default='path/to/audio', help='Folder containing audio files')
+parser.add_argument('--ref_image_extension', type=str, default='.png', help='Reference image file extension')
+parser.add_argument('--audio_extension', type=str, default='.wav', help='Audio file extension')
+args = parser.parse_args()
+
+# ============================================
 # Batch processing parameters
 # ============================================
-# Block number (01-30)
-block                       = "01"
-# Path to the block JSON file
-block_json_file_path        = "datasets/blocks/01.json"
-# Folder containing reference images (files should be named as: filename.png)
-ref_image_folder            = "path/to/ref/images"
-# Folder containing audio files (files should be named as: filename.wav or filename.mp3)
-audio_folder                = "path/to/audio"
+# Block number (from command line argument)
+block = args.block
+# Path to the block JSON file (auto-generated from block number)
+block_json_file_path = f"datasets/blocks/{block}.json"
+# Folder containing reference images (from command line argument)
+ref_image_folder = args.ref_image_folder
+# Folder containing audio files (from command line argument)
+audio_folder = args.audio_folder
 # Use ref_image as the first frame
-init_first_frame        = False
+init_first_frame = False
 
-# Reference image and audio file extensions
-ref_image_extension     = ".png"
-audio_extension         = ".wav"  # or ".mp3"
+# Reference image and audio file extensions (from command line arguments)
+ref_image_extension = args.ref_image_extension
+audio_extension = args.audio_extension
 
 # ============================================
 # Prompts
