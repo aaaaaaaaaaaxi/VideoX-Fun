@@ -1,0 +1,448 @@
+{
+  "metadata": {
+    "block_id": 4,
+    "total_blocks": 30,
+    "block_size": 106,
+    "total_files": 3172,
+    "datasets": [
+      "celebvhq",
+      "mead"
+    ],
+    "emotions": [
+      "angry",
+      "contempt",
+      "disgusted",
+      "fear",
+      "happy",
+      "neutral",
+      "sad",
+      "surprised"
+    ]
+  },
+  "mapping": {
+    "Jou60MhXBcw_2": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "Jyr8R8cSGdo_0": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "JZC_q1ZuDik_5": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "k7_V-3ApEiM_3": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "KMI-Sxq9Npg_5": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "kmr68ZevIrM_0": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "kmr68ZevIrM_3": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "kRNhyHiBUXs_0": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "kVTYhZ0NBOs_12": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "ky_kL1IexAo_1": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "ky_kL1IexAo_3": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "MMigS6B4t3Q_0": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "MZIPOu6WeGg_2": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "n-omBTsCIDE_1": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "o1RMSG4bnrg_0": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "o36m-2TPwck_2": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "o36m-2TPwck_3": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "obIuEpZsuA8_2": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "OBJchimlDoo_0": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "ohnkD-gjNVQ_0": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "oMt4F9ELo3U_0": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "OvbvCOM89Ew_0": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "OyziGbUQBIc_1": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "pK35em6gl0Q_6": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "PnZpYoBuiGw_2": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "PP9l4LP0WPI_1": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "PurkHHO7Gcc_2": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "PurkHHO7Gcc_4": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "pX53F8yJ-Ck_4": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "PX6i-NGnvyA_0": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "Q1-jHyQHGl8_3": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "QE9BNy65NPE_2": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "qHA5R-Q1Od8_0": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "QOWkXpnwlek_1": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "qR9MgJkOFJ0_3": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "QsCBiq5cET4_0": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "qTa5iKsbAno_4": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "QyeYgwO4ADg_0": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "r7J-Qx2InoU_0": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "rgXplohCw5o_0": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "Rj9fUYRr81A_1": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "roLboEc4M-w_2": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "RTN_7iFKURk_0": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "RVMRncOzt2I_0": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "rxC2ZWU4IPo_4": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "rYHCZi-tmTE_3": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "ScO8_gSXqJQ_62": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "SUKdlcCiE60_3": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "t8SxAUU3GyA_0": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "Ug6yhGuDcUQ_2": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "Ug6yhGuDcUQ_3": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "uvb505WqWFI_7": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "uX7CAoxBNOU_4": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "V1cXZYKjw5Y_2": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "W10naYa-l6U_0": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "w3_QWJAThXI_0": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "w3_QWJAThXI_1": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "W4rtGPCsoXA_3": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "wEP_8v33-yU_1": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "WEvTEdLLa2s_7": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "x1FhrhoudSE_0": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "X22SDMuqFVc_1": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "x4L81QLGYuM_1": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "XLIuN6-FMRw_0": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "XrnUNfRvAho_3": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "XuNDB-xL6uc_5": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "yAw98SYT2Qc_11": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "yC3yUmN1hGs_11": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "Ydiwx316cJw_9_1": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "YgJ5ZEn67tk_2": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "zFbHwupcqpQ_3": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "ZGLPxEv_EWo_2": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "ZwlQdSE1LdM_0": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "zzUYkxN11P4_1": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "_g-f7cZGqJ0_2": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "_iw7PLtjjow_8": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "_KXzVNUJjn8_10": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "_KXzVNUJjn8_13": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "_N1L7UsUeuo_1": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "_PSEaTZSZEE_0": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "_v5zFIqjEZg_0": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "_v5zFIqjEZg_1": {
+      "dataset": "celebvhq",
+      "emotion": "contempt"
+    },
+    "-HWkUQJjVrI_0": {
+      "dataset": "celebvhq",
+      "emotion": "disgusted"
+    },
+    "-HWkUQJjVrI_11": {
+      "dataset": "celebvhq",
+      "emotion": "disgusted"
+    },
+    "-rjR4El7qzg_1": {
+      "dataset": "celebvhq",
+      "emotion": "disgusted"
+    },
+    "-uCFfGjnRa8_0": {
+      "dataset": "celebvhq",
+      "emotion": "disgusted"
+    },
+    "-Z1lkcEEF_w_0": {
+      "dataset": "celebvhq",
+      "emotion": "disgusted"
+    },
+    "0zROMB5cxBA_0": {
+      "dataset": "celebvhq",
+      "emotion": "disgusted"
+    },
+    "1dwtsZ4IJQE_9": {
+      "dataset": "celebvhq",
+      "emotion": "disgusted"
+    },
+    "21zfukKMmOg_0": {
+      "dataset": "celebvhq",
+      "emotion": "disgusted"
+    },
+    "3lfO6OCqcCA_1": {
+      "dataset": "celebvhq",
+      "emotion": "disgusted"
+    },
+    "3NUMcmRDlDU_4": {
+      "dataset": "celebvhq",
+      "emotion": "disgusted"
+    },
+    "3NUMcmRDlDU_7": {
+      "dataset": "celebvhq",
+      "emotion": "disgusted"
+    },
+    "4T-eLDfVb7g_4": {
+      "dataset": "celebvhq",
+      "emotion": "disgusted"
+    },
+    "6wOMJWtcDTk_2": {
+      "dataset": "celebvhq",
+      "emotion": "disgusted"
+    },
+    "7dw45dGMGNY_2": {
+      "dataset": "celebvhq",
+      "emotion": "disgusted"
+    },
+    "9CHoQ0O7McA_2": {
+      "dataset": "celebvhq",
+      "emotion": "disgusted"
+    },
+    "9yHJcx89XXk_1": {
+      "dataset": "celebvhq",
+      "emotion": "disgusted"
+    },
+    "9yHJcx89XXk_2": {
+      "dataset": "celebvhq",
+      "emotion": "disgusted"
+    },
+    "ajRRS6NzMBU_3": {
+      "dataset": "celebvhq",
+      "emotion": "disgusted"
+    },
+    "ajRRS6NzMBU_5": {
+      "dataset": "celebvhq",
+      "emotion": "disgusted"
+    },
+    "aKnvOP-1U00_1": {
+      "dataset": "celebvhq",
+      "emotion": "disgusted"
+    },
+    "ALfuWSv9YVc_1": {
+      "dataset": "celebvhq",
+      "emotion": "disgusted"
+    },
+    "alh8b1lYuRU_0": {
+      "dataset": "celebvhq",
+      "emotion": "disgusted"
+    },
+    "aM7X0C7vK1I_0": {
+      "dataset": "celebvhq",
+      "emotion": "disgusted"
+    },
+    "aM7X0C7vK1I_2": {
+      "dataset": "celebvhq",
+      "emotion": "disgusted"
+    }
+  }
+}

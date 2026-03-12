@@ -1,0 +1,452 @@
+[
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/M039_video_front_disgusted_level_1_004.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/M039_video_front_disgusted_level_1_004.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/M039_video_front_disgusted_level_1_004.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/W014_video_front_contempt_level_3_013.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/W014_video_front_contempt_level_3_013.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/W014_video_front_contempt_level_3_013.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample/DhIEcD_WkA8_0.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_first_frame/DhIEcD_WkA8_0.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample_flame_params/DhIEcD_WkA8_0.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/W009_video_front_happy_level_3_019.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/W009_video_front_happy_level_3_019.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/W009_video_front_happy_level_3_019.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/M003_video_front_neutral_level_1_011.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/M003_video_front_neutral_level_1_011.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/M003_video_front_neutral_level_1_011.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/W015_video_front_angry_level_3_029.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/W015_video_front_angry_level_3_029.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/W015_video_front_angry_level_3_029.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/W009_video_front_neutral_level_1_034.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/W009_video_front_neutral_level_1_034.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/W009_video_front_neutral_level_1_034.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/W040_video_front_contempt_level_3_017.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/W040_video_front_contempt_level_3_017.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/W040_video_front_contempt_level_3_017.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/W040_video_front_happy_level_1_027.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/W040_video_front_happy_level_1_027.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/W040_video_front_happy_level_1_027.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/M040_video_front_contempt_level_1_033.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/M040_video_front_contempt_level_1_033.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/M040_video_front_contempt_level_1_033.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/W033_video_front_happy_level_3_053.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/W033_video_front_happy_level_3_053.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/W033_video_front_happy_level_3_053.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/M033_video_front_happy_level_3_009.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/M033_video_front_happy_level_3_009.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/M033_video_front_happy_level_3_009.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/M032_video_front_surprised_level_1_001.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/M032_video_front_surprised_level_1_001.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/M032_video_front_surprised_level_1_001.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/M022_video_front_fear_level_2_014.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/M022_video_front_fear_level_2_014.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/M022_video_front_fear_level_2_014.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/M009_video_front_fear_level_1_023.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/M009_video_front_fear_level_1_023.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/M009_video_front_fear_level_1_023.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample/0tx4o3yXM64_13.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_first_frame/0tx4o3yXM64_13.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample_flame_params/0tx4o3yXM64_13.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/M029_video_front_angry_level_3_027.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/M029_video_front_angry_level_3_027.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/M029_video_front_angry_level_3_027.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/M024_video_front_angry_level_1_001.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/M024_video_front_angry_level_1_001.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/M024_video_front_angry_level_1_001.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/M033_video_front_sad_level_3_023.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/M033_video_front_sad_level_3_023.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/M033_video_front_sad_level_3_023.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/M028_video_front_disgusted_level_2_029.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/M028_video_front_disgusted_level_2_029.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/M028_video_front_disgusted_level_2_029.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample/SF5EacV4NI0_0.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_first_frame/SF5EacV4NI0_0.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample_flame_params/SF5EacV4NI0_0.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/W011_video_front_angry_level_3_026.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/W011_video_front_angry_level_3_026.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/W011_video_front_angry_level_3_026.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/M032_video_front_sad_level_3_019.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/M032_video_front_sad_level_3_019.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/M032_video_front_sad_level_3_019.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/M019_video_front_angry_level_1_018.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/M019_video_front_angry_level_1_018.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/M019_video_front_angry_level_1_018.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample/zM5Gz6pB6BI_19_0.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_first_frame/zM5Gz6pB6BI_19_0.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample_flame_params/zM5Gz6pB6BI_19_0.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample/RW0a7Xn8hf8_10.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_first_frame/RW0a7Xn8hf8_10.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample_flame_params/RW0a7Xn8hf8_10.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/W009_video_front_disgusted_level_1_007.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/W009_video_front_disgusted_level_1_007.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/W009_video_front_disgusted_level_1_007.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample/K5q9y1k6rTM_1_1.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_first_frame/K5q9y1k6rTM_1_1.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample_flame_params/K5q9y1k6rTM_1_1.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample/4TsgjtL0Qx4_6.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_first_frame/4TsgjtL0Qx4_6.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample_flame_params/4TsgjtL0Qx4_6.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/W036_video_front_contempt_level_3_047.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/W036_video_front_contempt_level_3_047.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/W036_video_front_contempt_level_3_047.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/M041_video_front_sad_level_3_055.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/M041_video_front_sad_level_3_055.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/M041_video_front_sad_level_3_055.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample/a_i-mCZH5bo_0.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_first_frame/a_i-mCZH5bo_0.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample_flame_params/a_i-mCZH5bo_0.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample/0gzBre9CTzA_42_0.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_first_frame/0gzBre9CTzA_42_0.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample_flame_params/0gzBre9CTzA_42_0.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample/g3a9qZnTzJQ_1.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_first_frame/g3a9qZnTzJQ_1.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample_flame_params/g3a9qZnTzJQ_1.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/W036_video_front_surprised_level_2_016.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/W036_video_front_surprised_level_2_016.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/W036_video_front_surprised_level_2_016.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/W036_video_front_fear_level_1_024.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/W036_video_front_fear_level_1_024.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/W036_video_front_fear_level_1_024.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample/kswPGoPPdwE_0.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_first_frame/kswPGoPPdwE_0.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample_flame_params/kswPGoPPdwE_0.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/M003_video_front_contempt_level_2_013.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/M003_video_front_contempt_level_2_013.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/M003_video_front_contempt_level_2_013.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample/IMuAOVTXtLM_0.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_first_frame/IMuAOVTXtLM_0.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample_flame_params/IMuAOVTXtLM_0.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample/xIwb0YVV95U_1.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_first_frame/xIwb0YVV95U_1.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample_flame_params/xIwb0YVV95U_1.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/M039_video_front_surprised_level_2_058.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/M039_video_front_surprised_level_2_058.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/M039_video_front_surprised_level_2_058.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/M007_video_front_disgusted_level_1_027.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/M007_video_front_disgusted_level_1_027.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/M007_video_front_disgusted_level_1_027.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample/nxxD2tAnAw4_20.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_first_frame/nxxD2tAnAw4_20.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample_flame_params/nxxD2tAnAw4_20.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample/UKDyYcJN-ZU_11.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_first_frame/UKDyYcJN-ZU_11.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample_flame_params/UKDyYcJN-ZU_11.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/M040_video_front_contempt_level_2_019.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/M040_video_front_contempt_level_2_019.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/M040_video_front_contempt_level_2_019.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample/s-Y-3SCO0ds_0_1.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_first_frame/s-Y-3SCO0ds_0_1.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample_flame_params/s-Y-3SCO0ds_0_1.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample/dJKmVxOv-GM_6.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_first_frame/dJKmVxOv-GM_6.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample_flame_params/dJKmVxOv-GM_6.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/M041_video_front_disgusted_level_2_004.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/M041_video_front_disgusted_level_2_004.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/M041_video_front_disgusted_level_2_004.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512/M037_video_front_fear_level_3_038.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/crop_head_512_first_frame/M037_video_front_fear_level_3_038.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/MEAD/smirk_processed/flame_params/M037_video_front_fear_level_3_038.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  },
+  {
+    "file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample/plq5c5Df-JM_1.mp4",
+    "ref_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_first_frame/plq5c5Df-JM_1.png",
+    "flame_file_path": "/hpc2hdd/home/ntang745/workspace/CelebV-HQ/35666_resample_flame_params/plq5c5Df-JM_1.pkl",
+    "text": "视频中的人在讲话",
+    "type": "video",
+    "height": 512,
+    "width": 512
+  }
+]

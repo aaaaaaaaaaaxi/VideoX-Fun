@@ -1,0 +1,448 @@
+{
+  "metadata": {
+    "block_id": 22,
+    "total_blocks": 30,
+    "block_size": 106,
+    "total_files": 3172,
+    "datasets": [
+      "celebvhq",
+      "mead"
+    ],
+    "emotions": [
+      "angry",
+      "contempt",
+      "disgusted",
+      "fear",
+      "happy",
+      "neutral",
+      "sad",
+      "surprised"
+    ]
+  },
+  "mapping": {
+    "M026_video_front_fear_level_2_010": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M026_video_front_fear_level_3_008": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M026_video_front_fear_level_3_016": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M026_video_front_fear_level_3_018": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M027_video_front_fear_level_1_023": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M027_video_front_fear_level_2_022": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M027_video_front_fear_level_3_015": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M028_video_front_fear_level_1_018": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M028_video_front_fear_level_2_010": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M028_video_front_fear_level_3_002": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M029_video_front_fear_level_1_012": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M029_video_front_fear_level_2_002": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M029_video_front_fear_level_2_025": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M029_video_front_fear_level_3_018": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M030_video_front_fear_level_1_009": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M030_video_front_fear_level_2_019": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M031_video_front_fear_level_1_007": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M031_video_front_fear_level_2_004": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M031_video_front_fear_level_2_006": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M031_video_front_fear_level_3_013": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M032_video_front_fear_level_1_001": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M032_video_front_fear_level_3_014": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M033_video_front_fear_level_1_006": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M033_video_front_fear_level_1_012": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M033_video_front_fear_level_2_006": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M033_video_front_fear_level_2_017": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M033_video_front_fear_level_2_019": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M033_video_front_fear_level_3_016": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M033_video_front_fear_level_3_017": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M033_video_front_fear_level_3_024": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M033_video_front_fear_level_3_026": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M034_video_front_fear_level_2_020": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M034_video_front_fear_level_3_030": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M035_video_front_fear_level_1_013": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M035_video_front_fear_level_1_017": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M035_video_front_fear_level_2_020": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M035_video_front_fear_level_2_021": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M035_video_front_fear_level_2_030": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M035_video_front_fear_level_3_011": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M035_video_front_fear_level_3_025": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M037_video_front_fear_level_1_031": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M037_video_front_fear_level_1_040": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M037_video_front_fear_level_2_001": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M037_video_front_fear_level_2_018": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M037_video_front_fear_level_2_037": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M037_video_front_fear_level_3_040": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M039_video_front_fear_level_1_038": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M039_video_front_fear_level_2_018": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M039_video_front_fear_level_3_010": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M039_video_front_fear_level_3_039": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M040_video_front_fear_level_1_025": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M040_video_front_fear_level_2_033": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M041_video_front_fear_level_1_016": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M041_video_front_fear_level_1_047": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M041_video_front_fear_level_3_003": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M041_video_front_fear_level_3_023": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M042_video_front_fear_level_1_008": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M042_video_front_fear_level_1_033": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M042_video_front_fear_level_1_057": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M042_video_front_fear_level_2_026": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M042_video_front_fear_level_3_033": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "M042_video_front_fear_level_3_045": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W009_video_front_fear_level_1_025": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W009_video_front_fear_level_1_027": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W011_video_front_fear_level_1_006": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W011_video_front_fear_level_1_017": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W011_video_front_fear_level_1_023": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W011_video_front_fear_level_1_026": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W011_video_front_fear_level_3_005": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W011_video_front_fear_level_3_013": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W014_video_front_fear_level_1_017": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W014_video_front_fear_level_3_007": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W014_video_front_fear_level_3_021": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W015_video_front_fear_level_2_006": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W015_video_front_fear_level_2_015": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W015_video_front_fear_level_2_025": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W015_video_front_fear_level_2_030": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W015_video_front_fear_level_3_019": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W016_video_front_fear_level_1_017": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W016_video_front_fear_level_2_013": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W016_video_front_fear_level_2_022": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W016_video_front_fear_level_2_025": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W016_video_front_fear_level_2_027": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W018_video_front_fear_level_3_026": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W018_video_front_fear_level_3_029": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W019_video_front_fear_level_2_003": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W019_video_front_fear_level_2_024": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W019_video_front_fear_level_2_026": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W019_video_front_fear_level_3_016": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W021_video_front_fear_level_1_050": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W021_video_front_fear_level_2_007": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W021_video_front_fear_level_2_037": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W021_video_front_fear_level_3_015": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W023_video_front_fear_level_1_058": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W023_video_front_fear_level_3_002": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W023_video_front_fear_level_3_010": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W024_video_front_fear_level_2_031": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W024_video_front_fear_level_2_038": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W024_video_front_fear_level_3_024": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W024_video_front_fear_level_3_057": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W025_video_front_fear_level_1_045": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W025_video_front_fear_level_2_015": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W025_video_front_fear_level_2_038": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W025_video_front_fear_level_2_054": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W026_video_front_fear_level_1_023": {
+      "dataset": "mead",
+      "emotion": "fear"
+    },
+    "W026_video_front_fear_level_1_031": {
+      "dataset": "mead",
+      "emotion": "fear"
+    }
+  }
+}

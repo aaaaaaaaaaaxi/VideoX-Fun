@@ -1,0 +1,448 @@
+{
+  "metadata": {
+    "block_id": 18,
+    "total_blocks": 30,
+    "block_size": 106,
+    "total_files": 3172,
+    "datasets": [
+      "celebvhq",
+      "mead"
+    ],
+    "emotions": [
+      "angry",
+      "contempt",
+      "disgusted",
+      "fear",
+      "happy",
+      "neutral",
+      "sad",
+      "surprised"
+    ]
+  },
+  "mapping": {
+    "M019_video_front_contempt_level_3_028": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M022_video_front_contempt_level_1_001": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M022_video_front_contempt_level_1_028": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M022_video_front_contempt_level_2_004": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M022_video_front_contempt_level_2_019": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M022_video_front_contempt_level_2_022": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M022_video_front_contempt_level_3_001": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M022_video_front_contempt_level_3_011": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M022_video_front_contempt_level_3_015": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M023_video_front_contempt_level_2_019": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M023_video_front_contempt_level_2_020": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M023_video_front_contempt_level_3_002": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M024_video_front_contempt_level_2_006": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M024_video_front_contempt_level_3_026": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M025_video_front_contempt_level_1_013": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M025_video_front_contempt_level_1_021": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M025_video_front_contempt_level_2_011": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M025_video_front_contempt_level_3_015": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M026_video_front_contempt_level_2_022": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M026_video_front_contempt_level_3_021": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M027_video_front_contempt_level_1_020": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M027_video_front_contempt_level_2_009": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M027_video_front_contempt_level_3_018": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M028_video_front_contempt_level_1_011": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M028_video_front_contempt_level_1_028": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M028_video_front_contempt_level_1_030": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M028_video_front_contempt_level_2_003": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M028_video_front_contempt_level_2_018": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M028_video_front_contempt_level_3_004": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M029_video_front_contempt_level_1_001": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M029_video_front_contempt_level_2_013": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M029_video_front_contempt_level_2_028": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M029_video_front_contempt_level_3_029": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M029_video_front_contempt_level_3_030": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M030_video_front_contempt_level_1_011": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M030_video_front_contempt_level_2_002": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M030_video_front_contempt_level_2_022": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M030_video_front_contempt_level_3_007": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M031_video_front_contempt_level_2_002": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M031_video_front_contempt_level_2_008": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M031_video_front_contempt_level_2_020": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M031_video_front_contempt_level_2_027": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M031_video_front_contempt_level_3_014": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M031_video_front_contempt_level_3_030": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M032_video_front_contempt_level_1_015": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M032_video_front_contempt_level_2_010": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M032_video_front_contempt_level_2_024": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M032_video_front_contempt_level_3_014": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M033_video_front_contempt_level_2_003": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M034_video_front_contempt_level_1_021": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M034_video_front_contempt_level_3_004": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M035_video_front_contempt_level_1_030": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M035_video_front_contempt_level_2_019": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M035_video_front_contempt_level_3_012": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M037_video_front_contempt_level_3_008": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M039_video_front_contempt_level_1_009": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M039_video_front_contempt_level_1_036": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M039_video_front_contempt_level_1_049": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M039_video_front_contempt_level_1_051": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M039_video_front_contempt_level_1_056": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M039_video_front_contempt_level_2_003": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M039_video_front_contempt_level_2_055": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M039_video_front_contempt_level_2_056": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M039_video_front_contempt_level_3_028": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M039_video_front_contempt_level_3_055": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M040_video_front_contempt_level_1_010": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M040_video_front_contempt_level_1_027": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M040_video_front_contempt_level_1_056": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M040_video_front_contempt_level_2_034": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M040_video_front_contempt_level_3_008": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M040_video_front_contempt_level_3_018": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M040_video_front_contempt_level_3_027": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M041_video_front_contempt_level_1_017": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M041_video_front_contempt_level_2_020": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M041_video_front_contempt_level_2_056": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M041_video_front_contempt_level_3_035": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M041_video_front_contempt_level_3_049": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M041_video_front_contempt_level_3_056": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M042_video_front_contempt_level_1_033": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M042_video_front_contempt_level_1_055": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "M042_video_front_contempt_level_2_050": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "W009_video_front_contempt_level_1_026": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "W009_video_front_contempt_level_2_004": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "W009_video_front_contempt_level_3_010": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "W009_video_front_contempt_level_3_018": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "W009_video_front_contempt_level_3_021": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "W011_video_front_contempt_level_1_008": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "W011_video_front_contempt_level_1_010": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "W011_video_front_contempt_level_1_023": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "W011_video_front_contempt_level_1_027": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "W011_video_front_contempt_level_2_005": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "W011_video_front_contempt_level_2_019": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "W011_video_front_contempt_level_2_021": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "W011_video_front_contempt_level_3_016": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "W014_video_front_contempt_level_2_012": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "W014_video_front_contempt_level_3_008": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "W015_video_front_contempt_level_1_008": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "W015_video_front_contempt_level_1_012": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "W015_video_front_contempt_level_1_022": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "W015_video_front_contempt_level_2_025": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "W015_video_front_contempt_level_3_010": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "W015_video_front_contempt_level_3_027": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "W016_video_front_contempt_level_1_004": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "W016_video_front_contempt_level_1_013": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "W016_video_front_contempt_level_3_008": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    },
+    "W018_video_front_contempt_level_1_010": {
+      "dataset": "mead",
+      "emotion": "contempt"
+    }
+  }
+}

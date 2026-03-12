@@ -1,0 +1,444 @@
+{
+  "metadata": {
+    "block_id": 30,
+    "total_blocks": 30,
+    "block_size": 105,
+    "total_files": 3172,
+    "datasets": [
+      "celebvhq",
+      "mead"
+    ],
+    "emotions": [
+      "angry",
+      "contempt",
+      "disgusted",
+      "fear",
+      "happy",
+      "neutral",
+      "sad",
+      "surprised"
+    ]
+  },
+  "mapping": {
+    "M040_video_front_surprised_level_1_002": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "M040_video_front_surprised_level_1_032": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "M040_video_front_surprised_level_2_009": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "M040_video_front_surprised_level_3_023": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "M040_video_front_surprised_level_3_032": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "M040_video_front_surprised_level_3_046": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "M041_video_front_surprised_level_2_052": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "M041_video_front_surprised_level_3_001": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "M041_video_front_surprised_level_3_010": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "M041_video_front_surprised_level_3_032": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "M041_video_front_surprised_level_3_058": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "M042_video_front_surprised_level_1_031": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "M042_video_front_surprised_level_1_046": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "M042_video_front_surprised_level_2_007": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "M042_video_front_surprised_level_3_023": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W009_video_front_surprised_level_1_009": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W009_video_front_surprised_level_1_010": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W009_video_front_surprised_level_2_005": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W009_video_front_surprised_level_2_015": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W009_video_front_surprised_level_2_026": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W009_video_front_surprised_level_3_003": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W011_video_front_surprised_level_2_015": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W011_video_front_surprised_level_2_017": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W011_video_front_surprised_level_3_001": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W011_video_front_surprised_level_3_007": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W014_video_front_surprised_level_1_021": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W014_video_front_surprised_level_1_027": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W014_video_front_surprised_level_2_027": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W014_video_front_surprised_level_3_014": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W014_video_front_surprised_level_3_025": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W015_video_front_surprised_level_2_029": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W015_video_front_surprised_level_3_009": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W015_video_front_surprised_level_3_014": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W016_video_front_surprised_level_1_015": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W016_video_front_surprised_level_1_021": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W016_video_front_surprised_level_3_005": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W016_video_front_surprised_level_3_008": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W016_video_front_surprised_level_3_010": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W016_video_front_surprised_level_3_029": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W018_video_front_surprised_level_1_010": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W018_video_front_surprised_level_2_016": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W018_video_front_surprised_level_2_017": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W018_video_front_surprised_level_3_009": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W019_video_front_surprised_level_1_003": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W019_video_front_surprised_level_1_004": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W019_video_front_surprised_level_1_009": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W019_video_front_surprised_level_1_016": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W019_video_front_surprised_level_2_025": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W021_video_front_surprised_level_1_038": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W021_video_front_surprised_level_2_016": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W021_video_front_surprised_level_2_032": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W021_video_front_surprised_level_2_052": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W021_video_front_surprised_level_3_023": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W023_video_front_surprised_level_1_015": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W023_video_front_surprised_level_1_021": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W023_video_front_surprised_level_2_037": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W023_video_front_surprised_level_2_043": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W023_video_front_surprised_level_2_057": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W023_video_front_surprised_level_3_015": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W023_video_front_surprised_level_3_058": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W024_video_front_surprised_level_2_008": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W024_video_front_surprised_level_2_017": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W024_video_front_surprised_level_2_045": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W024_video_front_surprised_level_2_057": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W024_video_front_surprised_level_3_008": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W024_video_front_surprised_level_3_010": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W025_video_front_surprised_level_1_030": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W025_video_front_surprised_level_1_043": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W025_video_front_surprised_level_2_053": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W025_video_front_surprised_level_3_003": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W026_video_front_surprised_level_1_001": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W026_video_front_surprised_level_1_008": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W026_video_front_surprised_level_2_045": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W026_video_front_surprised_level_3_021": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W026_video_front_surprised_level_3_022": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W028_video_front_surprised_level_1_021": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W028_video_front_surprised_level_1_023": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W028_video_front_surprised_level_1_052": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W028_video_front_surprised_level_2_038": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W028_video_front_surprised_level_2_052": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W028_video_front_surprised_level_3_007": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W029_video_front_surprised_level_1_031": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W029_video_front_surprised_level_2_001": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W029_video_front_surprised_level_3_057": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W033_video_front_surprised_level_2_032": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W033_video_front_surprised_level_3_044": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W035_video_front_surprised_level_1_031": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W035_video_front_surprised_level_2_031": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W035_video_front_surprised_level_3_023": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W035_video_front_surprised_level_3_038": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W036_video_front_surprised_level_1_032": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W036_video_front_surprised_level_3_015": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W036_video_front_surprised_level_3_023": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W037_video_front_surprised_level_1_022": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W037_video_front_surprised_level_3_007": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W037_video_front_surprised_level_3_046": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W037_video_front_surprised_level_3_058": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W038_video_front_surprised_level_2_017": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W038_video_front_surprised_level_2_039": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W038_video_front_surprised_level_3_030": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W038_video_front_surprised_level_3_057": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W040_video_front_surprised_level_1_022": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W040_video_front_surprised_level_2_008": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W040_video_front_surprised_level_2_053": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    },
+    "W040_video_front_surprised_level_2_057": {
+      "dataset": "mead",
+      "emotion": "surprised"
+    }
+  }
+}

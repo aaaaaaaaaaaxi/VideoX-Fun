@@ -1,0 +1,444 @@
+{
+  "metadata": {
+    "block_id": 25,
+    "total_blocks": 30,
+    "block_size": 105,
+    "total_files": 3172,
+    "datasets": [
+      "celebvhq",
+      "mead"
+    ],
+    "emotions": [
+      "angry",
+      "contempt",
+      "disgusted",
+      "fear",
+      "happy",
+      "neutral",
+      "sad",
+      "surprised"
+    ]
+  },
+  "mapping": {
+    "W029_video_front_happy_level_1_039": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W029_video_front_happy_level_2_022": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W029_video_front_happy_level_2_053": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W029_video_front_happy_level_3_003": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W029_video_front_happy_level_3_014": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W033_video_front_happy_level_1_009": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W033_video_front_happy_level_1_027": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W033_video_front_happy_level_1_035": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W033_video_front_happy_level_2_020": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W033_video_front_happy_level_2_029": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W033_video_front_happy_level_2_039": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W033_video_front_happy_level_3_013": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W033_video_front_happy_level_3_019": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W035_video_front_happy_level_1_009": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W035_video_front_happy_level_1_013": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W035_video_front_happy_level_2_048": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W035_video_front_happy_level_3_041": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W036_video_front_happy_level_2_040": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W036_video_front_happy_level_3_008": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W036_video_front_happy_level_3_058": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W037_video_front_happy_level_1_015": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W037_video_front_happy_level_1_033": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W037_video_front_happy_level_2_013": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W037_video_front_happy_level_2_058": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W038_video_front_happy_level_1_020": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W038_video_front_happy_level_1_041": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W038_video_front_happy_level_2_008": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W038_video_front_happy_level_2_028": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W040_video_front_happy_level_1_014": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "W040_video_front_happy_level_2_014": {
+      "dataset": "mead",
+      "emotion": "happy"
+    },
+    "M003_video_front_neutral_level_1_011": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M003_video_front_neutral_level_1_015": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M003_video_front_neutral_level_1_020": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M003_video_front_neutral_level_1_024": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M003_video_front_neutral_level_1_025": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M003_video_front_neutral_level_1_029": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M003_video_front_neutral_level_1_039": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M003_video_front_neutral_level_1_040": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M005_video_front_neutral_level_1_005": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M005_video_front_neutral_level_1_033": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M007_video_front_neutral_level_1_005": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M007_video_front_neutral_level_1_010": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M007_video_front_neutral_level_1_012": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M007_video_front_neutral_level_1_021": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M007_video_front_neutral_level_1_025": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M009_video_front_neutral_level_1_003": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M009_video_front_neutral_level_1_009": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M009_video_front_neutral_level_1_028": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M009_video_front_neutral_level_1_034": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M009_video_front_neutral_level_1_039": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M011_video_front_neutral_level_1_011": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M011_video_front_neutral_level_1_012": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M011_video_front_neutral_level_1_018": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M011_video_front_neutral_level_1_027": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M012_video_front_neutral_level_1_006": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M012_video_front_neutral_level_1_035": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M012_video_front_neutral_level_1_036": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M013_video_front_neutral_level_1_008": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M013_video_front_neutral_level_1_010": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M013_video_front_neutral_level_1_013": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M013_video_front_neutral_level_1_039": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M019_video_front_neutral_level_1_003": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M019_video_front_neutral_level_1_007": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M019_video_front_neutral_level_1_008": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M019_video_front_neutral_level_1_014": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M022_video_front_neutral_level_1_012": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M022_video_front_neutral_level_1_030": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M022_video_front_neutral_level_1_037": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M023_video_front_neutral_level_1_003": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M023_video_front_neutral_level_1_010": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M023_video_front_neutral_level_1_030": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M024_video_front_neutral_level_1_012": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M024_video_front_neutral_level_1_029": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M024_video_front_neutral_level_1_036": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M025_video_front_neutral_level_1_023": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M025_video_front_neutral_level_1_034": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M026_video_front_neutral_level_1_010": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M026_video_front_neutral_level_1_016": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M026_video_front_neutral_level_1_017": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M026_video_front_neutral_level_1_021": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M026_video_front_neutral_level_1_027": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M026_video_front_neutral_level_1_028": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M026_video_front_neutral_level_1_036": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M026_video_front_neutral_level_1_037": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M027_video_front_neutral_level_1_002": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M027_video_front_neutral_level_1_008": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M027_video_front_neutral_level_1_009": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M027_video_front_neutral_level_1_034": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M027_video_front_neutral_level_1_039": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M028_video_front_neutral_level_1_015": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M028_video_front_neutral_level_1_028": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M028_video_front_neutral_level_1_037": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M029_video_front_neutral_level_1_020": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M029_video_front_neutral_level_1_021": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M029_video_front_neutral_level_1_024": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M029_video_front_neutral_level_1_025": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M029_video_front_neutral_level_1_026": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M029_video_front_neutral_level_1_030": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M030_video_front_neutral_level_1_007": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M030_video_front_neutral_level_1_023": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M030_video_front_neutral_level_1_025": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M031_video_front_neutral_level_1_006": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M031_video_front_neutral_level_1_010": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M031_video_front_neutral_level_1_011": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    },
+    "M031_video_front_neutral_level_1_025": {
+      "dataset": "mead",
+      "emotion": "neutral"
+    }
+  }
+}

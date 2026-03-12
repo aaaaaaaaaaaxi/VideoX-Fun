@@ -1,0 +1,448 @@
+{
+  "metadata": {
+    "block_id": 15,
+    "total_blocks": 30,
+    "block_size": 106,
+    "total_files": 3172,
+    "datasets": [
+      "celebvhq",
+      "mead"
+    ],
+    "emotions": [
+      "angry",
+      "contempt",
+      "disgusted",
+      "fear",
+      "happy",
+      "neutral",
+      "sad",
+      "surprised"
+    ]
+  },
+  "mapping": {
+    "i_QrZFmSFH8_9": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "jo-aQkgNMKQ_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "Jp9IN_iver4_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "JpVI_vXVk4M_2": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "JRloSmzWBOg_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "k-m4QOtv-rQ_3": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "K1kuhYL7Lxc_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "K3OlytfxzHU_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "k8Do9tamQSM_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "KaVglFjQynk_3": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "KblaujDjQ4g_2": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "KDXK5R3f01I_1": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "KhtepI51wuo_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "kJnH45GslL0_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "kPXFWplmSyA_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "KU8y7u-xqHg_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "kWuwuQ0X9OA_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "L3aF2hwu8yE_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "Lb6bmM_JTI0_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "lCUBQnsS9go_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "LCWzLnaJqBw_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "liebWzD9gnM_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "lm-Fds--l8g_1": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "lPB6exj8Kgo_2": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "lR8KTwcC8fc_1": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "LSYNpmc_1G0_1": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "M7Ot2vswJLE_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "mAtmopQxu0o_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "Mfcqb8DD400_5": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "mFshUX5D5nw_4": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "Mgc3y6p-Bys_1": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "MG_Lyg74UlU_2": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "MSzytvDsPfo_3": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "MvDNoWSnSsU_1": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "MXcxWsdjYHA_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "N6y4uAB-k6k_7": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "NCKkEP5Ol4s_17": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "ndHmHU78jV8_9": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "nRLP98lG1YA_1": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "nZWo6dP2zVw_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "O31rBYqYkuQ_1": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "obdI70UxNTI_12_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "Owk_n1qAc2o_26_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "Q6ojFfkVK9o_4": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "QC5QojgtRi0_1": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "qfEkv726kdQ_75": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "QN8ln3Hx1mc_1": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "QN8ln3Hx1mc_2": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "QN8ln3Hx1mc_3": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "QOpjxhNMDoM_1": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "QPDuZ_Wq7ZA_1": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "R1k_1p3mitg_1": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "rtsis0lgx7k_2": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "rWe5nzPq1JA_1": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "sDQLmkgigkg_6": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "SNOFdP7OYyQ_9": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "spzZdVYB5X0_7": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "sStaoozOzzw_22": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "SxztUnejrvI_2": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "sZ0BevZEKrc_3": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "s_U8eaFH4uc_1": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "T3zIklxWw44_1": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "tjBBL2ZtHt0_37": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "tjBBL2ZtHt0_48": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "tkj3klWMn5E_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "vnd8dfg_x5Y_1": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "vP5Rd-mLZkM_1": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "vw44oj_STSw_1": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "vxFr0xNspFU_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "W1W5JF4lRIQ_5": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "w8uoKa8cu4s_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "wKPbi9oL5xU_1": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "xAj_tKw-Gig_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "XnfiKz-Zk7Y_1": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "xNwQyNMSUmg_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "XPxddPA2CTE_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "Xq5eXYCKUF8_2": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "Y1VyYbpE6KU_12": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "yb4pnHS97SU_29": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "YbqP2YGIOac_3": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "ym6On_sjxKM_9": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "ZMplRnotp8M_4": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "Ztt_UDCfW-g_1": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "_4juqo20ABE_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "_bkBt4Z6NQ8_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "_UledOmoM-Q_2": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "_UvKhc0wVU8_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "_VEDJMixt3c_0": {
+      "dataset": "celebvhq",
+      "emotion": "surprised"
+    },
+    "M003_video_front_angry_level_1_009": {
+      "dataset": "mead",
+      "emotion": "angry"
+    },
+    "M003_video_front_angry_level_1_015": {
+      "dataset": "mead",
+      "emotion": "angry"
+    },
+    "M003_video_front_angry_level_2_003": {
+      "dataset": "mead",
+      "emotion": "angry"
+    },
+    "M003_video_front_angry_level_2_004": {
+      "dataset": "mead",
+      "emotion": "angry"
+    },
+    "M003_video_front_angry_level_3_011": {
+      "dataset": "mead",
+      "emotion": "angry"
+    },
+    "M005_video_front_angry_level_1_007": {
+      "dataset": "mead",
+      "emotion": "angry"
+    },
+    "M005_video_front_angry_level_1_020": {
+      "dataset": "mead",
+      "emotion": "angry"
+    },
+    "M005_video_front_angry_level_2_014": {
+      "dataset": "mead",
+      "emotion": "angry"
+    },
+    "M005_video_front_angry_level_3_002": {
+      "dataset": "mead",
+      "emotion": "angry"
+    },
+    "M005_video_front_angry_level_3_019": {
+      "dataset": "mead",
+      "emotion": "angry"
+    },
+    "M007_video_front_angry_level_1_003": {
+      "dataset": "mead",
+      "emotion": "angry"
+    },
+    "M007_video_front_angry_level_1_008": {
+      "dataset": "mead",
+      "emotion": "angry"
+    },
+    "M007_video_front_angry_level_1_020": {
+      "dataset": "mead",
+      "emotion": "angry"
+    },
+    "M007_video_front_angry_level_2_006": {
+      "dataset": "mead",
+      "emotion": "angry"
+    },
+    "M007_video_front_angry_level_2_024": {
+      "dataset": "mead",
+      "emotion": "angry"
+    },
+    "M007_video_front_angry_level_3_017": {
+      "dataset": "mead",
+      "emotion": "angry"
+    },
+    "M009_video_front_angry_level_1_007": {
+      "dataset": "mead",
+      "emotion": "angry"
+    },
+    "M009_video_front_angry_level_2_004": {
+      "dataset": "mead",
+      "emotion": "angry"
+    }
+  }
+}
