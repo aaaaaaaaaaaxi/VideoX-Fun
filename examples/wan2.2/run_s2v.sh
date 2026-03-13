@@ -23,9 +23,9 @@ nohup torchrun --nproc_per_node=2 --master_port=29505 \
 # 多卡, 情感prompt
 nohup torchrun --nproc_per_node=2 --master_port=29507 \
     examples/wan2.2/predict_s2v_batch_multi_emotion.py \
-    --block 11_12 \
-    --ref_image_folder /hpc2hdd/home/ntang745/workspace/sample_emotion_video/image \
-    --audio_folder /hpc2hdd/home/ntang745/workspace/sample_emotion_video/audio \
+    --block gen_sample_mead \
+    --ref_image_folder /hpc2hdd/home/ntang745/workspace/sample_gen/image \
+    --audio_folder /hpc2hdd/home/ntang745/workspace/sample_gen/audio \
     --ref_image_extension .png \
     --audio_extension .wav \
-    > log/s2v_emotion/batch_predict_11_12.log 2>&1 &
+    > log/s2v_emotion/batch_predict_gen_sample_mead.log 2>&1 &

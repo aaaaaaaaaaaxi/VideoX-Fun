@@ -105,7 +105,10 @@ args = parser.parse_args()
 # Block number (from command line argument)
 block = args.block
 # Path to the block JSON file (auto-generated from block number)
-block_json_file_path = f"data_predict/blocks/{block}.json"
+
+# 注意修改！
+block_json_file_path = f"data_predict/gen_sample/{block}.json"
+
 # Folder containing reference images (from command line argument)
 ref_image_folder = args.ref_image_folder
 # Folder containing audio files (from command line argument)
@@ -143,7 +146,7 @@ num_inference_steps = 40
 lora_weight         = 0.55
 lora_high_weight    = 0.55
 # Save path (block number will be appended)
-save_path           = "samples/wan-videos-speech2v/emotion"
+save_path           = "samples/wan-videos-speech2v/new_emotion"
 
 device = set_multi_gpus_devices(ulysses_degree, ring_degree)
 
