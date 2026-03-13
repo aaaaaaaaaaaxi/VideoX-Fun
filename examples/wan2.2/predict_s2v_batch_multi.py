@@ -35,13 +35,13 @@ from videox_fun.utils.utils import (filter_kwargs, get_image_latent,
                                     merge_video_audio, save_videos_grid)
 
 # GPU memory mode, which can be chosen in [model_full_load, model_full_load_and_qfloat8, model_cpu_offload, model_cpu_offload_and_qfloat8, sequential_cpu_offload].
-GPU_memory_mode     = "model_cpu_offload"
+GPU_memory_mode     = "model_full_load"
 
 # Multi GPUs config
-ulysses_degree      = 1
+ulysses_degree      = 2
 ring_degree         = 1
 # Use FSDP to save more GPU memory in multi gpus.
-fsdp_dit            = False
+fsdp_dit            = True
 fsdp_text_encoder   = True
 # Compile will give a speedup in fixed resolution and need a little GPU memory.
 # The compile_dit is not compatible with the fsdp_dit and sequential_cpu_offload.
