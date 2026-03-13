@@ -118,10 +118,25 @@ ref_image_extension = args.ref_image_extension
 audio_extension = args.audio_extension
 
 # ============================================
+# Emotion to prompt mapping
+# ============================================
+emotion_prompts = {
+    "angry": "A person is speaking with an angry expression.",
+    "contempt": "A person is speaking with a contemptuous expression.",
+    "disgusted": "A person is speaking with a disgusted expression.",
+    "fear": "A person is speaking with a scared expression.",
+    "happy": "A person is speaking with a joyful expression.",
+    "neutral": "A person is speaking with a neutral expression.",
+    "sad": "A person is speaking with a sorrowful expression.",
+    "surprised": "A person is speaking with a surprised expression.",
+}
+# Default prompt when emotion is not found
+default_prompt = "A person is speaking."
+
+# ============================================
 # Prompts
 # ============================================
-prompt              = "一个人在说话。"
-negative_prompt     = "色调艳丽，过曝，静态，细节模糊不清，字幕，风格，作品，画作，画面，静止，整体发灰，最差质量，低质量，JPEG压缩残留，丑陋的，残缺的，多余的手指，画得不好的手部，画得不好的脸部，畸形的，毁容的，形态畸形的肢体，手指融合，静止不动的画面，杂乱的背景，三条腿，背景人很多，倒着走"
+negative_prompt     = "Over-saturated colors, overexposed, static, blurry details, subtitles, style, artwork, painting, static frame, grayish overall, worst quality, low quality, JPEG compression artifacts, ugly, mutilated, extra fingers, poorly drawn hands, poorly drawn face, deformed, disfigured, malformed limbs, fused fingers, static scene, messy background, three legs, crowded background, walking backwards"
 guidance_scale      = 4.5
 seed                = 43
 num_inference_steps = 40
@@ -370,14 +385,22 @@ for filename, info in pbar:
     try:
         generator = torch.Generator(device=device).manual_seed(seed)
 
+        # Get emotion-specific prompt
+        emotion = info.get('emotion', 'neutral').lower()
+        current_prompt = emotion_prompts.get(emotion, default_prompt)
+
         # Create inner progress bar for inference steps
-        step_pbar = tqdm(total=num_inference_steps, desc=f"  {filename[:20]}", unit="step", position=1, leave=False, ncols=100)
+        step_pbar = tqdm(total=num_inference_steps, desc=f"  {filename[:15]} [{emotion}]", unit="step", position=1, leave=False, ncols=100)
 
         # Define callback to update step progress
         def step_callback(pipe, i, t, callback_kwargs):
             step_pbar.update(1)
             step_pbar.set_postfix({'step': f'{i+1}/{num_inference_steps}'})
             return callback_kwargs
+
+        # Get emotion-specific prompt
+        emotion = info.get('emotion', 'neutral').lower()
+        current_prompt = emotion_prompts.get(emotion, default_prompt)
 
         with torch.no_grad():
             video_length_processed = video_length // vae.config.temporal_compression_ratio * vae.config.temporal_compression_ratio if video_length != 1 else 1
@@ -394,7 +417,7 @@ for filename, info in pbar:
             pose_video, _, _, _ = get_video_to_video_latent(control_video, video_length=video_length_processed, sample_size=sample_size, fps=fps, ref_image=None)
 
             sample = pipeline(
-                prompt,
+                current_prompt,
                 num_frames = video_length_processed,
                 negative_prompt = negative_prompt,
                 height      = sample_size[0],
