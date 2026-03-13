@@ -60,21 +60,9 @@ cfg_skip_ratio      = 0
 enable_riflex       = False
 riflex_k            = 6
 
-# Config and model path
-config_path         = "config/wan2.2/wan_civitai_s2v.yaml"
-model_name          = "models/Diffusion_Transformer/Wan2.2-S2V-14B"
-
 # Choose the sampler in "Flow", "Flow_Unipc", "Flow_DPM++"
 sampler_name        = "Flow"
 shift               = 3
-
-# Load pretrained model if need
-transformer_path        = None
-transformer_high_path   = None
-vae_path                = None
-# Load lora model if need
-lora_path               = None
-lora_high_path          = None
 
 # Other params
 # sample_size         = [832, 480]
@@ -85,27 +73,42 @@ fps                 = 16
 # Use torch.float16 if GPU does not support torch.bfloat16
 weight_dtype            = torch.bfloat16
 
-# The path of the pose control video
-control_video           = None
-
 # ============================================
 # Parse command line arguments
 # ============================================
 parser = argparse.ArgumentParser(description='Batch generate videos with S2V model')
-parser.add_argument('--block', type=str, default='01', help='Block number (01-30)')
+# Data paths
+parser.add_argument('--block_json_path', type=str, default=None, help='Direct path to block JSON file')
 parser.add_argument('--ref_image_folder', type=str, default='path/to/ref/images', help='Folder containing reference images')
 parser.add_argument('--audio_folder', type=str, default='path/to/audio', help='Folder containing audio files')
 parser.add_argument('--ref_image_extension', type=str, default='.png', help='Reference image file extension')
 parser.add_argument('--audio_extension', type=str, default='.wav', help='Audio file extension')
+# Model paths
+parser.add_argument('--config_path', type=str, default='config/wan2.2/wan_civitai_s2v.yaml', help='Path to config file')
+parser.add_argument('--model_name', type=str, default='models/Diffusion_Transformer/Wan2.2-S2V-14B', help='Model name or path')
+parser.add_argument('--transformer_path', type=str, default=None, help='Path to transformer checkpoint')
+parser.add_argument('--transformer_high_path', type=str, default=None, help='Path to high noise transformer checkpoint')
+parser.add_argument('--vae_path', type=str, default=None, help='Path to VAE checkpoint')
+parser.add_argument('--lora_path', type=str, default=None, help='Path to LoRA checkpoint')
+parser.add_argument('--lora_high_path', type=str, default=None, help='Path to high noise LoRA checkpoint')
+parser.add_argument('--control_video', type=str, default=None, help='Path to pose control video')
+# Output path
+parser.add_argument('--save_path', type=str, default='samples/wan-videos-speech2v', help='Output directory')
 args = parser.parse_args()
 
 # ============================================
 # Batch processing parameters
 # ============================================
-# Block number (from command line argument)
-block = args.block
-# Path to the block JSON file (auto-generated from block number)
-block_json_file_path = f"data_predict/blocks/{block}.json"
+# Path to the block JSON file and block name extraction
+if args.block_json_path:
+    block_json_file_path = args.block_json_path
+    # Extract block name from filename (remove path and .json extension)
+    block = os.path.splitext(os.path.basename(args.block_json_path))[0]
+else:
+    # Use default block
+    block = '01'
+    block_json_file_path = f"data_predict/blocks/{block}.json"
+
 # Folder containing reference images (from command line argument)
 ref_image_folder = args.ref_image_folder
 # Folder containing audio files (from command line argument)
@@ -116,6 +119,17 @@ init_first_frame = False
 # Reference image and audio file extensions (from command line arguments)
 ref_image_extension = args.ref_image_extension
 audio_extension = args.audio_extension
+
+# Model and config paths (from command line arguments)
+config_path = args.config_path
+model_name = args.model_name
+transformer_path = args.transformer_path
+transformer_high_path = args.transformer_high_path
+vae_path = args.vae_path
+lora_path = args.lora_path
+lora_high_path = args.lora_high_path
+control_video = args.control_video
+save_path = args.save_path
 
 # ============================================
 # Emotion to prompt mapping
@@ -142,8 +156,6 @@ seed                = 43
 num_inference_steps = 40
 lora_weight         = 0.55
 lora_high_weight    = 0.55
-# Save path (block number will be appended)
-save_path           = "samples/wan-videos-speech2v/emotion"
 
 device = set_multi_gpus_devices(ulysses_degree, ring_degree)
 
@@ -332,15 +344,28 @@ if lora_path is not None:
 with open(block_json_file_path, 'r', encoding='utf-8') as f:
     block_data = json.load(f)
 
-metadata = block_data['metadata']
+metadata = block_data.get('metadata', {})
 mapping = block_data['mapping']
 
+# Get metadata values with defaults for simplified JSON format
+block_id = metadata.get('block_id', block)
+total_files = metadata.get('total_files', len(mapping))
+block_size = metadata.get('block_size', len(mapping))
+datasets = metadata.get('datasets', [])
+emotions = metadata.get('emotions', [])
+
+# Print batch info
 print(f"\n{'='*60}")
-print(f"Batch Processing - Block {metadata['block_id']}/{metadata['total_blocks']}")
+if 'total_blocks' in metadata:
+    print(f"Batch Processing - Block {block_id}/{metadata['total_blocks']}")
+else:
+    print(f"Batch Processing - {block}")
 print(f"{'='*60}")
-print(f"Total files in this block: {metadata['block_size']}")
-print(f"Dataset: {', '.join(metadata['datasets'])}")
-print(f"Emotions: {', '.join(metadata['emotions'])}")
+print(f"Total files: {block_size}")
+if datasets:
+    print(f"Dataset: {', '.join(datasets)}")
+if emotions:
+    print(f"Emotions: {', '.join(emotions)}")
 print(f"{'='*60}\n")
 
 # Create save path with block number
@@ -358,7 +383,7 @@ items_list = list(mapping.items())
 os.environ['DIFFUSERS_DISABLE_PROGRESS_BAR'] = '1'
 
 # Create outer progress bar for batch processing
-pbar = tqdm(items_list, total=metadata['block_size'], desc=f"Block {block}", unit="video", position=0)
+pbar = tqdm(items_list, total=block_size, desc=f"Block {block}", unit="video", position=0)
 
 for filename, info in pbar:
     ref_image_path = os.path.join(ref_image_folder, filename + ref_image_extension)
@@ -468,6 +493,6 @@ print(f"{'='*60}")
 print(f"Processed successfully: {processed_count}")
 print(f"Skipped (missing files): {skipped_count}")
 print(f"Failed (errors): {failed_count}")
-print(f"Total in block: {metadata['block_size']}")
+print(f"Total in block: {block_size}")
 print(f"Output directory: {save_path_block}")
 print(f"{'='*60}\n")
