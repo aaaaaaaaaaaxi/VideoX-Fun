@@ -19,3 +19,13 @@ nohup torchrun --nproc_per_node=2 --master_port=29505 \
     --ref_image_extension .png \
     --audio_extension .wav \
     > log/s2v/batch_predict_02.log 2>&1 &
+
+# 多卡, 情感prompt
+nohup torchrun --nproc_per_node=2 --master_port=29507 \
+    examples/wan2.2/predict_s2v_batch_multi_emotion.py \
+    --block 11_12 \
+    --ref_image_folder /hpc2hdd/home/ntang745/workspace/sample_emotion_video/image \
+    --audio_folder /hpc2hdd/home/ntang745/workspace/sample_emotion_video/audio \
+    --ref_image_extension .png \
+    --audio_extension .wav \
+    > log/s2v_emotion/batch_predict_11_12.log 2>&1 &

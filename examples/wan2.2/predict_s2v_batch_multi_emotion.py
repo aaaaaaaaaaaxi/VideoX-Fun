@@ -143,7 +143,7 @@ num_inference_steps = 40
 lora_weight         = 0.55
 lora_high_weight    = 0.55
 # Save path (block number will be appended)
-save_path           = "samples/wan-videos-speech2v"
+save_path           = "samples/wan-videos-speech2v/emotion"
 
 device = set_multi_gpus_devices(ulysses_degree, ring_degree)
 
